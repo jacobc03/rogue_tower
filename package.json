@@ -1,0 +1,24 @@
+{
+  "name": "rogue_tower",
+  "version": "1.0.0",
+  "description": "Project 2 RPG Game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobc03/rogue_tower.git"
+  },
+  "keywords": [
+    "unity",
+    "node"
+  ],
+  "author": "Team Sweet & Sour Pork",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacobc03/rogue_tower/issues"
+  },
+  "homepage": "https://github.com/jacobc03/rogue_tower#readme"
+}
