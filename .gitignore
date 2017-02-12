@@ -1,6 +1,7 @@
 node_modules
 
-/ROGUE TOWER/Node/connection/key.js
+# Database Info #
+/Node/connection/key.js
 
 # Unity generated files #
 ######################
