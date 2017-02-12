@@ -1,7 +1,7 @@
 node_modules
 
-# Database Password #
-key.js
+# Database Info #
+/Node/connection/key.js
 
 # Unity generated files #
 ######################
