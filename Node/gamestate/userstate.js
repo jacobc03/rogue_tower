@@ -1,0 +1,1 @@
+// This will act just like the enemystate.js but will scale the user accordingly. I'm still arranging this set up.

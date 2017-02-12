@@ -1,0 +1,1 @@
+// api routes will contain the routes that allow the game to interact with sequelize and the database
