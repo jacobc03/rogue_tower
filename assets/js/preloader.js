@@ -9,7 +9,8 @@ RogueTower.Preloader.prototype = {
       //  this.preloadBar = this.add.sprite((RogueTower.GAME_WIDTH-311)/2,
       //     (RogueTower.GAME_HEIGHT-27)/2, 'preloaderBar');
       //  this.load.setPreloadSprite(this.preloadBar);
- 
+        
+        this.load.crossOrigin = "Anonymous";
         this.load.image('background', './Graphics/background.png');
         //this.load.image('floor', 'img/floor.png');
         //this.load.image('monster-cover', 'img/monster-cover.png');
