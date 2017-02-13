@@ -1,6 +1,6 @@
 RogueTower.Preloader = function(game){
-    RogueTower.GAME_WIDTH = 600;
-    RogueTower.GAME_HEIGHT = 800;
+    RogueTower.GAME_WIDTH = 800;
+    RogueTower.GAME_HEIGHT = 400;
 };
 
 RogueTower.Preloader.prototype = {

@@ -22,7 +22,13 @@
   },
   "homepage": "https://github.com/jacobc03/rogue_tower#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.16.1",
     "express": "^4.14.1",
+    "mysql": "^2.13.0",
     "sequelize": "^3.30.2"
+  },
+  "devDependencies": {
+    "@orange-games/phaser-input": "^2.0.2"
   }
 }
