@@ -10,7 +10,7 @@ passport.use(new LocalStrategy(
 				console.log('Incorrect username.');
 				return done(null, false, {message: 'Incorrect username.'});
 			}
-			let salt = bcrypt.genSaltSync(4);
+			let salt = '$2a$04$' + [...password].filter((a,i) => i<5).join('');
 			let hashpassword = bcrypt.hashSync(password, salt);
 			console.log(hashpassword);
 			if (user.dataValues.password != hashpassword) {
