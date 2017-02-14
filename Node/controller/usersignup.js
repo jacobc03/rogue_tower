@@ -26,13 +26,13 @@ usersignup = {
 			return;
 		}
 
-		if (password.length < 5) {
+		if (password.length < 8) {
 			req.flash('error', "Password too short");
 			res.redirect('register');	
 			return;		
 		}
 
-		let salt = '$2a$04$' + [...password].filter((a,i) => i<5).join('');
+		let salt = '$2a$04$HN5eLtLO9ZYs.rHGr' + [...password].filter((a,i) => i<5).join('');
 		let hashpassword = bcrypt.hashSync(password, salt);
 
 	/*	var newUser = {
