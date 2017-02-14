@@ -1,13 +1,13 @@
-RogueTower.MainMenu = function(game) {};
-RogueTower.MainMenu.prototype = {
+RogueTower.Registration = function(game) {};
+RogueTower.Registration.prototype = {
     create: function() {
         this.add.sprite(0, 0, 'background');
         this.add.sprite((RogueTower.GAME_WIDTH-650), 10, 'title');
         this.add.button(RogueTower.GAME_WIDTH-480, RogueTower.GAME_HEIGHT-100,
-            'button-start', this.startGame);
+            'button_register', this.MainMenu);
+
     },
-    startGame: function() {
-        this.state.start('Game');
+    MainMenu: function() {
+        this.state.start('MainMenu');
     }
 };
-
