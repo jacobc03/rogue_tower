@@ -1,13 +1,11 @@
-RogueTower.MainMenu = function(game) {};
-RogueTower.MainMenu.prototype = {
+var MainMenuState = {
     create: function() {
-        this.add.sprite(0, 0, 'background');
-        this.add.sprite((RogueTower.GAME_WIDTH-650), 10, 'title');
-        this.add.button(RogueTower.GAME_WIDTH-480, RogueTower.GAME_HEIGHT-100,
-            'button-start', this.startGame);
+        game.add.sprite(0, 0, 'background');
+        game.add.sprite((game.GAME_WIDTH-650), 10, 'title');
+        game.add.button(game.GAME_WIDTH-480, game.GAME_HEIGHT-100,
+            'button_register', this.startGame);
     },
     startGame: function() {
-        this.state.start('Game');
+        game.state.start('Registration');
     }
-};
-
+}
