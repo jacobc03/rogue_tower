@@ -7,15 +7,18 @@ var player,
 
     score = 0,
     scoreText;
+
 var levelOneState = {
     preload: function(){
         game.load.image('background', './Graphics/towerbackground.jpeg');
         game.load.image('ground', './Graphics/RockTile.png');
+        game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
         game.load.image('dragon', './Graphics/dragon.png');
         game.load.spritesheet('dude', './Graphics/dude.png', 37, 45,18);
         game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
     },
+
     create: function() {
         
         //  Enables the Arcade Physics system
@@ -31,7 +34,7 @@ var levelOneState = {
     platforms.enableBody = true;
 
     // Makes the ground
-    var ground = platforms.create(0, this.world.height - 64, 'ground');
+    var ground = platforms.create(0, this.world.height - 64, 'hud');
 
     //  Scales the ground to fit the width of the game
     ground.scale.setTo(8,3);
@@ -122,9 +125,10 @@ var levelOneState = {
     }
 
     //  Displays the level
-    levelText = game.add.text(10, 15, 'Level: 1', { fontSize: '28px', fill: '#000' });
-    scoreText = game.add.text(10, 50, 'Score: 0', { fontSize: '28px', fill: '#000' });
-
+    levelText = game.add.text(10, 560, 'Level: 1', { fontSize: '16px', fill: '#000' });
+    scoreText = game.add.text(100, 560, 'Score: 0', { fontSize: '16px', fill: '#000' });
+    spells = game.add.text(200, 560, 'Fire: 60', {fontSize: '16px', fill: '#000'});
+    lives = game.add.text(680, 560, 'Lives: 100', {fontSize: '16px', fill: '#000'});
     //  Creates controls.
     cursors = this.input.keyboard.createCursorKeys();
     },
@@ -146,8 +150,8 @@ var levelOneState = {
 
     // If the dragon overlaps with the creeps, Call destroyCreep
     game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
-     game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
-      game.physics.arcade.overlap(door2, creeps, destroyCreep3, null, this);
+    game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
+    game.physics.arcade.overlap(door2, creeps, destroyCreep3, null, this);
     
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
