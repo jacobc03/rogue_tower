@@ -6,13 +6,11 @@ var MainMenuState = {
             'button-start', this.startGame);
         game.add.button(game.world.width-460, game.world.height-380,
             'button_register', this.Registration);
-
     },
     startGame: function() {
         game.state.start('levelOne');
     },
     Registration: function() {
-        game.state.start('Registration')
-
+        game.state.start('Registration');
     }
 }
