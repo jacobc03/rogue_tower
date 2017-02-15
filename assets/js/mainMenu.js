@@ -30,6 +30,7 @@ var MainMenuState = {
         game.add.button(game.world.width-480, game.world.height-180,
             'button-start', this.startGame);
         game.add.button(game.world.width-460, game.world.height-100,
+
             'button_register', this.Registration);
     },
     startGame: function() {
