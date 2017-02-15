@@ -11,9 +11,10 @@ RogueTower.Preloader.prototype = {
         this.load.image('game-over', './Graphics/gameover.png');
         this.load.spritesheet('button-start','./Graphics/button-start.png', 401, 143);
         this.load.spritesheet('button_register','./Graphics/button_register.png', 401, 143);
+       
     },
     create: function() {
-        this.state.start('Registration');
+        this.state.start('levelOne');
     }
 };
 

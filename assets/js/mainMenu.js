@@ -7,7 +7,7 @@ RogueTower.MainMenu.prototype = {
             'button-start', this.startGame);
     },
     startGame: function() {
-        this.state.start('Game');
+        this.state.start('LevelOne');
     }
 };
 
