@@ -1,11 +1,16 @@
 var MainMenuState = {
     create: function() {
         game.add.sprite(0, 0, 'background');
-        game.add.sprite((game.GAME_WIDTH-650), 10, 'title');
-        game.add.button(game.GAME_WIDTH-480, game.GAME_HEIGHT-100,
-            'button_register', this.startGame);
+        game.add.sprite((game.world.width-650), 10, 'title');
+        game.add.button(game.world.width-480, game.world.height-100,
+            'button-start', this.startGame);
+        game.add.button(game.world.width-460, game.world.height-180,
+            'button_register', this.Registration);
     },
     startGame: function() {
-        game.state.start('Registration');
+        game.state.start('levelOne');
+    },
+    Registration: function() {
+        game.state.start('Registration')
     }
 }

@@ -1,11 +1,11 @@
 var RegistrationState = {
 	create: function() {
         game.add.sprite(0, 0, 'background');
-        game.add.sprite((game.GAME_WIDTH-650), 10, 'title');
-        game.add.button(game.GAME_WIDTH-480, game.GAME_HEIGHT-100,
-            'button-start', this.MainMenu);
+        game.add.sprite((game.world.width-650), 10, 'title');
+        game.add.button(game.world.width-460, game.world.height-100,
+            'button_submit', this.MainMenu);
     },
     MainMenu: function() {
-    	console.log(this);
+        game.state.start('MainMenu');
     }
 }
