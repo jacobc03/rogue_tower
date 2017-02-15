@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'Game');
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'Game');
 	game.state.add('Boot', BootState);
 	game.state.add('Preloader', PreloaderState);
 	game.state.add('Registration', RegistrationState);
