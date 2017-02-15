@@ -9,9 +9,10 @@ var MainMenuState = {
 
     },
     startGame: function() {
-        game.state.start('Game');
+        game.state.start('levelOne');
     },
     Registration: function() {
         game.state.start('Registration')
+
     }
 }

@@ -10,6 +10,7 @@ var PreloaderState = {
     },
     create: function() {
         game.state.start('MainMenu');
+
     }
 }
 
