@@ -5,35 +5,31 @@ usersignup = {
 	validate: (data,req,res) => {
 		let	username = data.username,
 			email = data.email,
-			password = data.password,
+			password1 = data.password1,
 			password2 = data.password2;
 
-		if (!username || !email || !password || !password2) {
-			req.flash('error', "Please, fill fill out all entries");
-   			res.redirect('register');
+		if (!username || !email || !password1 || !password2) {
+			console.log('error', "Please, fill fill out all entries")
    			return;
 		}
 
-		if (password !== password2) {
-			req.flash('error', "Passwords do not match");
-			res.redirect('register');
+		if (password1 !== password2) {
+			console.log('error', "Passwords do not match");
 			return;
 		}
 
 		if (username.length < 5) {
-			req.flash('error', "Username too short");
-			res.redirect('register');
+			console.log('error', "Username too short");
 			return;
 		}
 
-		if (password.length < 8) {
-			req.flash('error', "Password too short");
-			res.redirect('register');	
+		if (password1.length < 8) {
+			console.log('error', "Password too short");
 			return;		
 		}
 
-		let salt = '$2a$04$HN5eLtLO9ZYs.rHGr' + [...password].filter((a,i) => i<5).join('');
-		let hashpassword = bcrypt.hashSync(password, salt);
+		let salt = '$2a$04$HN5eLtLO9ZYs.rHGr' + [...password1].filter((a,i) => i<5).join('');
+		let hashpassword = bcrypt.hashSync(password1, salt);
 
 	/*	var newUser = {
 			username: username,
