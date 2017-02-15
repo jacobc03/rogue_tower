@@ -1,15 +1,12 @@
-var RogueTower = {};
-RogueTower.Boot = function(game) {};
-RogueTower.Boot.prototype = {
+var BootState = {
     preload: function() {
-        this.load.image('preloaderBar', './Graphics/loading-bar.png');
+        game.load.image('preloaderBar', './Graphics/loading-bar.png');
     },
     create: function() {
-        this.input.maxPointers = 1;
-        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.scale.pageAlignHorizontally = true;
-        this.scale.pageAlignVertically = true;
-        this.state.start('Preloader');
+        game.input.maxPointers = 1;
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        game.state.start('Preloader');
     }
-};
-
+}

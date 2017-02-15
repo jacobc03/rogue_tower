@@ -1,29 +1,28 @@
-RogueTower.levelOne = function(game) {};
-var player;
-        var platforms;
-        var cursors;
+var player,
+    platforms,
+    cursors,
 
-        var level = 1;
-        var levelText;
+    level = 1,
+    levelText,
 
-        var score = 0;
-        var scoreText;
-RogueTower.levelOne.prototype = {
+    score = 0,
+    scoreText;
+var levelOneState = {
     preload: function(){
-         this.load.image('background', './Graphics/towerbackground.jpeg');
-        this.load.image('ground', './Graphics/RockTile.png');
-        this.load.image('door', './Graphics/door.png');
-        this.load.image('dragon', './Graphics/dragon.png');
-        this.load.spritesheet('dude', './Graphics/dude.png', 37, 45,18);
-        this.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
+        game.load.image('background', './Graphics/towerbackground.jpeg');
+        game.load.image('ground', './Graphics/RockTile.png');
+        game.load.image('door', './Graphics/door.png');
+        game.load.image('dragon', './Graphics/dragon.png');
+        game.load.spritesheet('dude', './Graphics/dude.png', 37, 45,18);
+        game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
     },
     create: function() {
-    	
+        
         //  Enables the Arcade Physics system
-    this.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  Makes a background for the game
-    this.add.tileSprite(0, 0,800,600, 'background');
+    game.add.tileSprite(0, 0,800,600, 'background');
 
     //  This platforms group holds the ground and ledges the user can jump on
     platforms = this.add.group();
@@ -69,16 +68,16 @@ RogueTower.levelOne.prototype = {
     
 
     // adds each of these sprites below with specific game location
-    player = this.add.sprite(32, this.world.height - 150, 'dude');
-    dragon = this.add.sprite(300, this.world.height - 490, 'dragon');
-    door1 = this.add.sprite(10, this.world.height - 500, 'door');
-    door2  = this.add.sprite(620, this.world.height - 500, 'door');
+    player = game.add.sprite(32, this.world.height - 150, 'dude');
+    dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
+    door1 = game.add.sprite(10, this.world.height - 500, 'door');
+    door2  = game.add.sprite(620, this.world.height - 500, 'door');
 
     //  adds physics to the each of the sprites below
-    this.physics.arcade.enable(player);
-    this.physics.arcade.enable(dragon);
-    this.physics.arcade.enable(door1);
-    this.physics.arcade.enable(door2);
+    game.physics.arcade.enable(player);
+    game.physics.arcade.enable(dragon);
+    game.physics.arcade.enable(door1);
+    game.physics.arcade.enable(door2);
 
 
     //  Physics properties for sprites. Gave each a bounce for fun
@@ -123,32 +122,32 @@ RogueTower.levelOne.prototype = {
     }
 
     //  Displays the level
-    levelText = this.add.text(10, 15, 'Level: 1', { fontSize: '28px', fill: '#000' });
-    scoreText = this.add.text(10, 50, 'Score: 0', { fontSize: '28px', fill: '#000' });
+    levelText = game.add.text(10, 15, 'Level: 1', { fontSize: '28px', fill: '#000' });
+    scoreText = game.add.text(10, 50, 'Score: 0', { fontSize: '28px', fill: '#000' });
 
     //  Creates controls.
     cursors = this.input.keyboard.createCursorKeys();
     },
     update: function() {
         //  Collide sprites with platforms
-    this.physics.arcade.collide(player, platforms);
-    this.physics.arcade.collide(dragon, platforms);
-    this.physics.arcade.collide(door1, platforms);
-    this.physics.arcade.collide(door2, platforms);
-    this.physics.arcade.collide(creeps, platforms);
+    game.physics.arcade.collide(player, platforms);
+    game.physics.arcade.collide(dragon, platforms);
+    game.physics.arcade.collide(door1, platforms);
+    game.physics.arcade.collide(door2, platforms);
+    game.physics.arcade.collide(creeps, platforms);
  
     //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
-    this.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
-    this.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
+    game.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
+    game.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
     // If the player overlaps with the dragon, Call fightDragonScence
-    this.physics.arcade.overlap(player, dragon, fightDragonScence, null, this);
+    game.physics.arcade.overlap(player, dragon, fightDragonScence, null, this);
     // If the player overlaps with the creeps, Call fightDragonScence
-    this.physics.arcade.overlap(player, creeps, fightCreepsScence, null, this);
+    game.physics.arcade.overlap(player, creeps, fightCreepsScence, null, this);
 
     // If the dragon overlaps with the creeps, Call destroyCreep
-    this.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
-     this.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
-      this.physics.arcade.overlap(door2, creeps, destroyCreep3, null, this);
+    game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
+     game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
+      game.physics.arcade.overlap(door2, creeps, destroyCreep3, null, this);
     
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
@@ -254,5 +253,4 @@ function destroyCreep3 (door2, creeps) {
 
 }
    }
-   
-};
+}
