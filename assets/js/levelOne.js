@@ -10,7 +10,12 @@ var player,
 
     score = 0,
     scoreText;
-
+var max = 0;
+var front_emitter;
+var mid_emitter;
+var back_emitter;
+var update_interval = 4 * 60;
+var i = 0;
 
 var levelOneState = {
     preload: function(){
@@ -30,6 +35,8 @@ var levelOneState = {
         game.load.image('fireball', './Graphics/fireball.png');
         game.load.image('closedchest', './Graphics/closedchest.png',37,42);
         game.load.image('openchest', './Graphics/openchest.png',37,42);
+        game.load.spritesheet('snowflakes', './Graphics/snowflakes.png', 17,17);
+
     },
 
     create: function() {
@@ -39,6 +46,34 @@ var levelOneState = {
 
     //  Makes a background for the game
     game.add.tileSprite(0, 0,800,600, 'background');
+
+
+
+back_emitter = game.add.emitter(game.world.centerX, -32, 600);
+    back_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
+    back_emitter.maxParticleScale = 0.6;
+    back_emitter.minParticleScale = 0.2;
+    back_emitter.setYSpeed(20, 100);
+    back_emitter.gravity = 0;
+    back_emitter.width = game.world.width * 1.5;
+    back_emitter.minRotation = 0;
+    back_emitter.maxRotation = 40;
+
+    mid_emitter = game.add.emitter(game.world.centerX, -32, 250);
+    mid_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
+    mid_emitter.maxParticleScale = 1.2;
+    mid_emitter.minParticleScale = 0.8;
+    mid_emitter.setYSpeed(50, 150);
+    mid_emitter.gravity = 0;
+    mid_emitter.width = game.world.width * 1.5;
+    mid_emitter.minRotation = 0;
+    mid_emitter.maxRotation = 40;
+
+
+
+    back_emitter.start(false, 14000, 20);
+    mid_emitter.start(false, 12000, 40);
+
 
     //  This platforms group holds the ground and ledges the user can jump on
     platforms = this.add.group();
