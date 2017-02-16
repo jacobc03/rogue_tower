@@ -53,7 +53,7 @@ var levelOneState = {
     ground.scale.setTo(8,3);
 
     //  This stops the ground from falling away when the user jumps on it
-    platforms.body.immovable = true;
+    ground.body.immovable = true;
 
     //  Creates the ledges and positions (width,height).Remember (0,0) is in top left corner
     var ledge = platforms.create(400, 460, 'ground');
@@ -61,18 +61,18 @@ var levelOneState = {
     ledge.body.immovable = true;
 
     ledge = platforms.create(Math.floor((Math.random() * 20) + 250), 420, 'ground');
-    
+    ledge.body.immovable = true;
     ledge = platforms.create(100, 350, 'ground');
-
+    ledge.body.immovable = true;
     ledge = platforms.create(280, 300, 'ground');
-    
+    ledge.body.immovable = true;
     ledge = platforms.create(420, 250, 'ground');
-
+    ledge.body.immovable = true;
     ledge = platforms.create(150, 200, 'ground');
-
+    ledge.body.immovable = true;
     //ledge for door1
     ledge = platforms.create(10, 250, 'ground');
-    
+    ledge.body.immovable = true;
     //ledge for door2
     ledge = platforms.create(600, 250, 'ground5');
     ledge.body.immovable = true;
