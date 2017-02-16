@@ -27,11 +27,11 @@ var MainMenuState = {
             placeHolder: 'Password',
             type: PhaserInput.InputType.password
         });
-        game.add.button(game.world.width-480, game.world.height-180,
+        game.add.button(game.world.width-480, game.world.height-200,
             'button-start', this.startGame);
-        game.add.button(game.world.width-460, game.world.height-100,
+        game.add.button(game.world.width-460, game.world.height-140,
             'button_register', this.Registration);
-        game.add.button(game.world.width-460, game.world.height-480,
+        game.add.button(game.world.width-430, game.world.height-85,
             'button_quit', this.end);
     },
     startGame: function() {
