@@ -1,64 +1,48 @@
-let floor = ['ground', 'ground4'], ledgeinc = 1;
-let chestx = Math.floor(Math.random() * 200 + 250),
-	door1x = [10], door1y = [Math.floor(Math.random() * 300)],
-	door2x = [730], door2y = [Math.floor(Math.random() * 300)];
+var currentmap; // current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
+				// each ledge being an individual index. the arrays for doorbuilder1&2 + chestbuilder + spikebuilder will match
+var ledgebuilderx = [	[350, 200, 500, 50, 650, 200, 500, 350, 350, 50, 650],
+						[50, 200, 50, 200, 50, 200, 450, 600, 460, 600, 600, 700]	],
+	ledgebuildery = [	[465, 395, 395, 325, 325, 255, 255, 185, 115, 185, 185],
+						[465, 395, 325, 255, 185, 115, 115, 185, 255, 325, 395, 115]	],
+	doorbuilder1 = [[70, 125], [720, 55]],
+	doorbuilder2 = [[670, 120], [720, 55]],
+	chestbuilder = [[380, 80], [620, 360]],
+	spikebuilder = [];
+// map 1: +- 150 to x; +70 to y;
+// doors: +20 to x to center; -60 to y to place ontop;
+// chests: +40 to x to center; -35 to y to place ontop;
 var Spawn = {
+	pickscene: function() {
+		newspawn = false;
+		currentmap = Math.floor(Math.random() * ledgebuilderx.length);
+		Spawn.ledge();
+        Spawn.chest();
+        Spawn.door();
+        Spawn.spike();
+	},
 	ledge: function() {
-		// door ledges
-		ledge[0] = platforms.create(door1x[0]-10, door1y[0]+60, "ground4");
-		ledge[1] = platforms.create(door2x[0]-30, door2y[0]+60, "ground");
-		// chest ledge
-		ledge[2] = platforms.create(chestx, 60, "ground");
-		// first set of ledge spawns
-		door1x[1] = door1x[0]+140;
-		if (door1y[0] >= 190 && ledgeinc == 1) {
-			door1y[1] = door1y[0]-30;
-			ledge[3] = platforms.create(door1x[1], door1y[1], "ground4");
-			ledgeinc++
-		}
-		else if (door1y[0] < 190 && ledgeinc == 1) {
-			door1y[1] = door1y[0]+120;
-			ledge[3] = platforms.create(door1x[1], door1y[1], "ground4");
-			ledgeinc++
-		}
-		door1x[2] = door1x[1]+140;
-		// second set of ledge spawns
-		if (door1y[1] < 190 && ledgeinc == 2) {
-			door1y[2] = door1y[1]+60;
-			ledge[4] = platforms.create(door1x[2], door1y[2], "ground4");
-			ledgeinc++
-		}
-		else if (door1y[1] >= 190 && ledgeinc == 2) {
-			door1y[2] = door1y[1]+60;
-			ledge[4] = platforms.create(door1x[2], door1y[2], "ground4");
-			ledgeinc++
-		}
-
-		door1y[3] = door1y[2]+60;
-		door1x[3] = door1x[2]+140;
-		ledge[5] = platforms.create(door1x[3], door1y[3], "ground4");
-
-		door1y[4] = door1y[3]+60;
-		door1x[4] = door1x[3]+140;
-		ledge[6] = platforms.create(door1x[4], door1y[4], "ground4");
-
-		door1y[5] = door1y[4]+60;
-		door1x[5] = door1x[4]+140;
-		ledge[7] = platforms.create(door1x[5], door1y[5], "ground4");
-
-		door1y[6] = door1y[5]+60;
-		door1x[6] = door1x[5]+140;
-		ledge[8] = platforms.create(door1x[6], door1y[6], "ground4");
+		// map 1: 11 ledges, map 2: 12 ledges
+		
+		var ledgemapx = ledgebuilderx[currentmap], ledgemapy = ledgebuildery[currentmap];
+		for (let i=0; i<ledgemapx.length; i++) {
+			ledge.push(platforms.create(ledgemapx[i], ledgemapy[i], "ground"))
+		}		
 		
 	    for (let i=0; i<ledge.length; i++) {
 	    	ledge[i].body.immovable = true;
 	    }
 	},
 	chest: function() {
-		closedChest  = game.add.sprite(chestx+30, 25, 'closedchest');
+		var chestmap = chestbuilder[currentmap];
+		closedChest = game.add.sprite(chestmap[0], chestmap[1], 'closedchest');
 	},
 	door: function() {
-		door1 = game.add.sprite(door1x[0], door1y[0], 'door');
-        door2  = game.add.sprite(door2x[0], door2y[0], 'door');
+		var door1map = doorbuilder1[currentmap], door2map = doorbuilder2[currentmap];
+		door1 = game.add.sprite(door1map[0], door1map[1], 'door');
+        door2  = game.add.sprite(door2map[0], door2map[1], 'door');
+	},
+	spike: function() {
+		spikeBall  = game.add.sprite(350, 125, 'spikeball');
+		spikeBall  = game.add.sprite(525, 425, 'spikeball');
 	}
 }

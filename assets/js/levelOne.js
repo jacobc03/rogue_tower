@@ -1,9 +1,10 @@
-var player, platforms, cursors, time, lives, livesText, level, levelText, ledge, score, scoreText;
+var player, platforms, cursors, time, lives, livesText, level, levelText, ledge, score, scoreText, newspawn;
 
 var reset = function() {
      time=1, lives=100, level=1, score=0;
 }
 reset() // will set intial numbers
+newspawn = true; // will be used to respawn map
 
 var levelOneState = {
     preload: function(){
@@ -41,18 +42,16 @@ var levelOneState = {
         //  This stops the ground from falling away when the user jumps on it
         ground.body.immovable = true;
 
-        // Set array to store spawned units
+        // Set array to store spawned ledges
         ledge = [];
-        // Call functions that spawn
-        Spawn.ledge();
-        Spawn.chest();
-        Spawn.door();
+        // Pick scene will choose a scene to spawn
+        Spawn.pickscene();
 
 
         // adds each of these sprites below with specific game location
         player = game.add.sprite(32, this.world.height - 150, 'dude');
         dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
-        spikeBall  = game.add.sprite(500, 40, 'spikeball');
+        
         
 
         //  adds physics to the each of the sprites below
