@@ -10,7 +10,9 @@ var player,
 
     score = 0,
     scoreText;
-
+var reset = function() {
+     time=1, lives=100, level=1, score=0;
+ }
 
 var levelOneState = {
     preload: function(){
@@ -33,7 +35,7 @@ var levelOneState = {
     },
 
     create: function() {
-        
+        reset() // will set intial numbers
         //  Enables the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
