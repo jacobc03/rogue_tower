@@ -11,8 +11,8 @@ var player,
     score,
     scoreText;
 var reset = function() {
-    time=1, lives=100, level=1, score=0;
-}
+     time=1, lives=100, level=1, score=0;
+ }
 
 var levelOneState = {
     preload: function(){
@@ -35,7 +35,7 @@ var levelOneState = {
     },
 
     create: function() {
-    reset() // will set intial numbers
+        reset() // will set intial numbers
         //  Enables the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -64,19 +64,14 @@ var levelOneState = {
 
     ledge = platforms.create(Math.floor((Math.random() * 20) + 250), 420, 'ground');
     ledge.body.immovable = true;
-
     ledge = platforms.create(100, 350, 'ground');
     ledge.body.immovable = true;
-
     ledge = platforms.create(280, 300, 'ground');
     ledge.body.immovable = true;
-
     ledge = platforms.create(420, 250, 'ground');
     ledge.body.immovable = true;
-
     ledge = platforms.create(150, 200, 'ground');
     ledge.body.immovable = true;
-
     //ledge for door1
     ledge = platforms.create(10, 250, 'ground');
     ledge.body.immovable = true;
@@ -103,7 +98,7 @@ var levelOneState = {
 
     //  Physics properties for sprites. Gave each a bounce for fun
     player.body.bounce.y = 0.1;
-    player.body.gravity.y = 600;
+    player.body.gravity.y = 440;
     player.body.collideWorldBounds = true;
 
     dragon.body.bounce.y = 0.5;
@@ -229,7 +224,7 @@ var fireBallInterval = setInterval(function(){
     if (cursors.up.isDown && player.body.touching.down)
     {
         //sets how high the player can jump
-        player.body.velocity.y = -325;
+        player.body.velocity.y = -260;
     }
     function nextLevelOption1 (player, door1) {
     

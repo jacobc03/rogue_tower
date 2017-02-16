@@ -13,6 +13,7 @@ var PreloaderState = {
         game.load.spritesheet('button_main-menu','./Graphics/button_main-menu.png', 401, 143);
         game.load.spritesheet('button_quit','./Graphics/button_quit.png', 401, 143);
         game.load.spritesheet('button_restart','./Graphics/button_restart.png', 401, 143);
+        game.load.spritesheet('snowflakes','./Graphics/snowflakes.png', 17, 17);
     },
     create: function() {
         game.state.start('MainMenu');
