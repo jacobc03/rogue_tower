@@ -12,7 +12,7 @@ var player,
     scoreText;
 
 
-var levelOneState = {
+var levelTwoState = {
     preload: function(){
         game.load.image('background', './Graphics/towerbackground.jpeg');
         game.load.image('ground', './Graphics/RockTile.png');
@@ -75,21 +75,30 @@ var levelOneState = {
     ledge = platforms.create(150, 200, 'ground');
     ledge.body.immovable = true;
 
+    ledge = platforms.create(570, 200, 'ground3');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(600, 150, 'ground3');
+    ledge.body.immovable = true;
+
     //ledge for door1
     ledge = platforms.create(10, 250, 'ground');
     ledge.body.immovable = true;
     //ledge for door2
-    ledge = platforms.create(600, 250, 'ground5');
+    ledge = platforms.create(650, 100, 'ground5');
     ledge.body.immovable = true;
     
+
 
     // adds each of these sprites below with specific game location
     player = game.add.sprite(32, this.world.height - 150, 'dude');
     dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
     door1 = game.add.sprite(10, this.world.height - 500, 'door');
-    door2  = game.add.sprite(620, this.world.height - 500, 'door');
+    door2  = game.add.sprite(680, this.world.height - 600, 'door');
     spikeBall  = game.add.sprite(500, this.world.height - 300, 'spikeball');
-    closedChest  = game.add.sprite(200, this.world.height - 500, 'closedchest');
+    //closedChest  = game.add.sprite(200, this.world.height - 500, 'closedchest');
+    spike  = game.add.sprite(270, this.world.height - 155, 'spike');
+    spike2  = game.add.sprite(279, this.world.height - 275, 'spike');
 
     //  adds physics to the each of the sprites below
     game.physics.arcade.enable(player);
@@ -97,7 +106,8 @@ var levelOneState = {
     game.physics.arcade.enable(door1);
     game.physics.arcade.enable(door2);
     game.physics.arcade.enable(spikeBall);
-    game.physics.arcade.enable(closedChest);
+    //game.physics.arcade.enable(closedChest);
+    game.physics.arcade.enable(spike)
 
     //  Physics properties for sprites. Gave each a bounce for fun
     player.body.bounce.y = 0.1;
@@ -116,10 +126,10 @@ var levelOneState = {
     door2.body.gravity.y = 300;
     door2.body.collideWorldBounds = true;
 
-    closedChest.body.bounce.y = 0.5;
+  /*  closedChest.body.bounce.y = 0.5;
     closedChest.body.gravity.y = 300;
     closedChest.body.collideWorldBounds = true;
-
+*/
     //  Made Two animations for when the player is walking left and right
     player.animations.add('left', [4, 5, 6], 10, true);
     player.animations.add('right', [7, 8,9], 10, true);
@@ -178,7 +188,7 @@ var fireBallInterval = setInterval(function(){
     game.physics.arcade.collide(door1, platforms);
     game.physics.arcade.collide(door2, platforms);
     game.physics.arcade.collide(creeps, platforms);
-    game.physics.arcade.collide(closedChest, platforms);
+//    game.physics.arcade.collide(closedChest, platforms);
  
     //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
     game.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
@@ -191,8 +201,10 @@ var fireBallInterval = setInterval(function(){
     game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
     // If the player overlaps with the spikeBall, Call killedByHazard
     game.physics.arcade.overlap(player, spikeBall, killedByHazard, null, this);
-    // If the dragon overlaps with the chest, Call OpenChest
-    game.physics.arcade.overlap(player, closedChest, openChest, null, this);
+    game.physics.arcade.overlap(player, spike, killedByHazard, null, this);
+    game.physics.arcade.overlap(player, spike2, killedByHazard, null, this);
+    // If the player overlaps with the chest, Call OpenChest
+  //  game.physics.arcade.overlap(player, closedChest, openChest, null, this);
     // If the dragon overlaps with the creeps, Call destroyCreep
     game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
     game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
@@ -232,9 +244,9 @@ var fireBallInterval = setInterval(function(){
     function nextLevelOption1 (player, door1) {
     
     // Removes the door from the screen
-    //door1.kill();
+    door1.kill();
 
-    game.state.start('levelTwo');
+    //this.state.start('Level2');
 
     //  Add and update the level
     level += 1;
@@ -246,9 +258,9 @@ var fireBallInterval = setInterval(function(){
 function nextLevelOption2 (player, door2) {
     
     // Removes the door from the screen
-    //door2.kill();
+    door2.kill();
 
-    game.state.start('levelTwo');
+    //this.state.start('levelTwo');
 
     //  Add and update the level
     level += 1;
@@ -301,7 +313,7 @@ function destroyCreep3 (door2, creeps) {
    creeps.kill();
 
 }
-function killedByHazard (player, fireBalls,spikeBall) {
+function killedByHazard (player, fireBalls,spikeBall,spike,spike2) {
     
     // kills the player
     if (lives ===0) {
@@ -313,12 +325,12 @@ function killedByHazard (player, fireBalls,spikeBall) {
    livesText.text = 'Lives: ' + lives;
 
 }
-function openChest(player, closedChest){
+/*function openChest(player, closedChest){
     closedChest.kill();
    }
    if (lives===0) {
     game.state.start('End')
    }
-
+*/
 }
 }
