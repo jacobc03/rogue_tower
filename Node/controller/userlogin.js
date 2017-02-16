@@ -4,22 +4,17 @@ var bcrypt = require('bcrypt-nodejs');
 module.exports = function(passport, LocalStrategy) {
 	passport.use(new LocalStrategy(
 		function(username, password, done) {
-			if (password.length < 8) {
-				console.log("Incorrect username or password.");
-				return done(null, false, { message: 'Incorrect username or password.' });
-			}
 			db.user.findOne({where: { username: username }}).then(function(user){
 				if (!user) {
-					console.log("Incorrect username or password.");
-					return done(null, false, { message: 'Incorrect username or password.' });
+					console.log('Incorrect username.');
+					return done(null, false, {message: 'Incorrect username.'});
 				}
 				let salt = '$2a$04$HN5eLtLO9ZYs.rHGr' + [...password].filter((a,i) => i<5).join('');
 				let hashpassword = bcrypt.hashSync(password, salt);
 				if (user.dataValues.password != hashpassword) {
-					console.log("Incorrect username or password.");
-					return done(null, false, { message: 'Incorrect username or password.' });
+					console.log("Incorrect password.");
+					return done(null, false, {message: 'Incorrect password.'});
 				}
-				console.log('user logged in');
 				return done(null, user);
 			});
 		}
