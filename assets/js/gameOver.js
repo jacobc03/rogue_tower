@@ -10,6 +10,7 @@ var EndState = {
             'button_quit');
     },
     startGame: function() {
+        reset();
         game.state.start('levelOne');
     },
     MainMenu: function() {
