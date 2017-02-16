@@ -1,6 +1,7 @@
 var player,
     platforms,
     cursors,
+    time=1,
 
     level = 1,
     levelText,
@@ -12,11 +13,18 @@ var levelOneState = {
     preload: function(){
         game.load.image('background', './Graphics/towerbackground.jpeg');
         game.load.image('ground', './Graphics/RockTile.png');
+        game.load.image('ground2', './Graphics/RockTile2.png')
+        game.load.image('ground3', './Graphics/RockTile3.png')
+        game.load.image('ground4', './Graphics/RockTile4.png')
+        game.load.image('ground5', './Graphics/RockTile5.png')
         game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
         game.load.image('dragon', './Graphics/dragon.png');
         game.load.spritesheet('dude', './Graphics/dude.png', 37, 45,18);
         game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
+        game.load.image('spike', './Graphics/spike.png')
+        game.load.image('spikeball', './Graphics/spikeball.png')
+        game.load.image('fireball', './Graphics/fireball.png')
     },
 
     create: function() {
@@ -47,7 +55,7 @@ var levelOneState = {
     //  This stops the ground from falling away when the user jumps on it
     ledge.body.immovable = true;
 
-    ledge = platforms.create(300, 420, 'ground');
+    ledge = platforms.create(Math.floor((Math.random() * 20) + 250), 420, 'ground');
     ledge.body.immovable = true;
 
     ledge = platforms.create(100, 350, 'ground');
@@ -66,7 +74,7 @@ var levelOneState = {
     ledge = platforms.create(10, 250, 'ground');
     ledge.body.immovable = true;
     //ledge for door2
-    ledge = platforms.create(600, 250, 'ground');
+    ledge = platforms.create(600, 250, 'ground5');
     ledge.body.immovable = true;
     
 
@@ -75,17 +83,18 @@ var levelOneState = {
     dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
     door1 = game.add.sprite(10, this.world.height - 500, 'door');
     door2  = game.add.sprite(620, this.world.height - 500, 'door');
+    spikeBall  = game.add.sprite(500, this.world.height - 300, 'spikeball');
 
     //  adds physics to the each of the sprites below
     game.physics.arcade.enable(player);
     game.physics.arcade.enable(dragon);
     game.physics.arcade.enable(door1);
     game.physics.arcade.enable(door2);
-
+    game.physics.arcade.enable(spikeBall);
 
     //  Physics properties for sprites. Gave each a bounce for fun
     player.body.bounce.y = 0.1;
-    player.body.gravity.y = 300;
+    player.body.gravity.y = 440;
     player.body.collideWorldBounds = true;
 
     dragon.body.bounce.y = 0.5;
@@ -104,25 +113,44 @@ var levelOneState = {
     player.animations.add('left', [4, 5, 6], 10, true);
     player.animations.add('right', [7, 8,9], 10, true);
 
-    
-     creeps = this.add.group();
+    creeps = this.add.group();
 
     //  Enables physics for any object that is the creeps group
     creeps.enableBody = true;
     //
     randomCreepNum=Math.floor((Math.random() * 10) + 1);
     console.log(randomCreepNum);
-    //  Here we'll create 12 of them evenly spaced apart
+    //  Creates a random number of Creeps
     for (var i = 0; i < randomCreepNum; i++)
     {
-        //  Create a star inside of the 'stars' group
+        //  Create a creep inside of the 'creeps' group
         var creep = creeps.create(i * 100, 180, 'creep');
 
-        //  Let gravity do its thing
+        //  Freefall speed
         creep.body.gravity.y = 300;
 
         
     }
+
+    fireBalls = this.add.group();
+
+    //  Enables physics for any object that is the creeps group
+    fireBalls.enableBody = true;
+// created function to make fireballs that fall every 3 seconds
+var fireBallInterval = setInterval(function(){
+    if (time<=2) {
+        for (var i = 1; i < 4; i++)
+    {
+        //  Creates a fireball
+        var fireBall = fireBalls.create(i * (Math.floor((Math.random() * 800)+ 1)), 0, 'fireball');
+    
+        //  Freefall speed
+        fireBall.body.gravity.y = 70;    
+    }
+    }
+},3000);
+   
+
 
     //  Displays the level
     levelText = game.add.text(10, 560, 'Level: 1', { fontSize: '16px', fill: '#000' });
@@ -147,7 +175,10 @@ var levelOneState = {
     game.physics.arcade.overlap(player, dragon, fightDragonScence, null, this);
     // If the player overlaps with the creeps, Call fightDragonScence
     game.physics.arcade.overlap(player, creeps, fightCreepsScence, null, this);
-
+    // If the player overlaps with the fireballs, Call killedByHazard
+    game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
+    // If the player overlaps with the spikeBall, Call killedByHazard
+    game.physics.arcade.overlap(player, spikeBall, killedByHazard, null, this);
     // If the dragon overlaps with the creeps, Call destroyCreep
     game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
     game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
@@ -182,7 +213,7 @@ var levelOneState = {
     if (cursors.up.isDown && player.body.touching.down)
     {
         //sets how high the player can jump
-        player.body.velocity.y = -220;
+        player.body.velocity.y = -260;
     }
     function nextLevelOption1 (player, door1) {
     
@@ -254,6 +285,13 @@ function destroyCreep3 (door2, creeps) {
     
     // Removes the creep from the screen
    creeps.kill();
+
+}
+function killedByHazard (player, fireBalls,spikeBall) {
+    
+    // kills the player
+   player.kill();
+   console.log("You Died");
 
 }
    }
