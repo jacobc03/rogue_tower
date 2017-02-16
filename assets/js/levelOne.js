@@ -2,6 +2,8 @@ var player,
     platforms,
     cursors,
     time=1,
+    lives=100,
+    livesText,
 
     level = 1,
     levelText,
@@ -9,22 +11,25 @@ var player,
     score = 0,
     scoreText;
 
+
 var levelOneState = {
     preload: function(){
         game.load.image('background', './Graphics/towerbackground.jpeg');
         game.load.image('ground', './Graphics/RockTile.png');
-        game.load.image('ground2', './Graphics/RockTile2.png')
-        game.load.image('ground3', './Graphics/RockTile3.png')
-        game.load.image('ground4', './Graphics/RockTile4.png')
-        game.load.image('ground5', './Graphics/RockTile5.png')
+        game.load.image('ground2', './Graphics/RockTile2.png');
+        game.load.image('ground3', './Graphics/RockTile3.png');
+        game.load.image('ground4', './Graphics/RockTile4.png');
+        game.load.image('ground5', './Graphics/RockTile5.png');
         game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
         game.load.image('dragon', './Graphics/dragon.png');
         game.load.spritesheet('dude', './Graphics/dude.png', 37, 45,18);
         game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
-        game.load.image('spike', './Graphics/spike.png')
-        game.load.image('spikeball', './Graphics/spikeball.png')
-        game.load.image('fireball', './Graphics/fireball.png')
+        game.load.image('spike', './Graphics/spike.png');
+        game.load.image('spikeball', './Graphics/spikeball.png');
+        game.load.image('fireball', './Graphics/fireball.png');
+        game.load.image('closedchest', './Graphics/closedchest.png',37,42);
+        game.load.image('openchest', './Graphics/openchest.png',37,42);
     },
 
     create: function() {
@@ -84,6 +89,7 @@ var levelOneState = {
     door1 = game.add.sprite(10, this.world.height - 500, 'door');
     door2  = game.add.sprite(620, this.world.height - 500, 'door');
     spikeBall  = game.add.sprite(500, this.world.height - 300, 'spikeball');
+    closedChest  = game.add.sprite(200, this.world.height - 500, 'closedchest');
 
     //  adds physics to the each of the sprites below
     game.physics.arcade.enable(player);
@@ -91,6 +97,7 @@ var levelOneState = {
     game.physics.arcade.enable(door1);
     game.physics.arcade.enable(door2);
     game.physics.arcade.enable(spikeBall);
+    game.physics.arcade.enable(closedChest);
 
     //  Physics properties for sprites. Gave each a bounce for fun
     player.body.bounce.y = 0.1;
@@ -108,6 +115,10 @@ var levelOneState = {
     door2.body.bounce.y = 0.5;
     door2.body.gravity.y = 300;
     door2.body.collideWorldBounds = true;
+
+    closedChest.body.bounce.y = 0.5;
+    closedChest.body.gravity.y = 300;
+    closedChest.body.collideWorldBounds = true;
 
     //  Made Two animations for when the player is walking left and right
     player.animations.add('left', [4, 5, 6], 10, true);
@@ -149,14 +160,14 @@ var fireBallInterval = setInterval(function(){
     }
     }
 },3000);
-   
+
 
 
     //  Displays the level
     levelText = game.add.text(10, 560, 'Level: 1', { fontSize: '16px', fill: '#000' });
     scoreText = game.add.text(100, 560, 'Score: 0', { fontSize: '16px', fill: '#000' });
     spells = game.add.text(200, 560, 'Fire: 60', {fontSize: '16px', fill: '#000'});
-    lives = game.add.text(680, 560, 'Lives: 100', {fontSize: '16px', fill: '#000'});
+    livesText = game.add.text(680, 560, 'Lives: 100', {fontSize: '16px', fill: '#000'});
     //  Creates controls.
     cursors = this.input.keyboard.createCursorKeys();
     },
@@ -167,6 +178,7 @@ var fireBallInterval = setInterval(function(){
     game.physics.arcade.collide(door1, platforms);
     game.physics.arcade.collide(door2, platforms);
     game.physics.arcade.collide(creeps, platforms);
+    game.physics.arcade.collide(closedChest, platforms);
  
     //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
     game.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
@@ -179,6 +191,8 @@ var fireBallInterval = setInterval(function(){
     game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
     // If the player overlaps with the spikeBall, Call killedByHazard
     game.physics.arcade.overlap(player, spikeBall, killedByHazard, null, this);
+    // If the dragon overlaps with the chest, Call OpenChest
+    game.physics.arcade.overlap(player, closedChest, openChest, null, this);
     // If the dragon overlaps with the creeps, Call destroyCreep
     game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
     game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
@@ -290,9 +304,18 @@ function destroyCreep3 (door2, creeps) {
 function killedByHazard (player, fireBalls,spikeBall) {
     
     // kills the player
-   player.kill();
-   console.log("You Died");
+    if (lives ===0) {
+         player.kill();
+         console.log("You Died");
+    }
+   console.log("You lost 1 Health");
+   lives -= 1;
+   livesText.text = 'Lives: ' + lives;
 
 }
+function openChest(player, closedChest){
+    closedChest.kill();
    }
+
+}
 }
