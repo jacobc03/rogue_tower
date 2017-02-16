@@ -1,14 +1,14 @@
 var player,
     platforms,
     cursors,
-    time=1,
-    lives=100,
+    time,
+    lives,
     livesText,
 
-    level = 1,
+    level,
     levelText,
 
-    score = 0,
+    score,
     scoreText;
 var reset = function() {
      time=1, lives=100, level=1, score=0;
