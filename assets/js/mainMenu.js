@@ -10,7 +10,7 @@ var max = 0,
 
 var MainMenuState = {
     create: function() {
-        game.add.sprite(0, 0, 'background');
+        game.add.sprite(0, 0, 'backgroundMain');
         game.add.sprite((game.world.width-650), 10, 'title');
         username = game.add.inputField(game.world.width-500, game.world.height-360, {
             font: '18px Arial',
@@ -36,16 +36,14 @@ var MainMenuState = {
             placeHolder: 'Password',
             type: PhaserInput.InputType.password
         });
-        var style = { font: "bold 22px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
+        var style = { font: "bold 36px Arial", fill: "#9e9e9e", boundsAlignH: "center", boundsAlignV: "middle"};
         text = game.add.text(0, 0, message[Math.floor(Math.random() * message.length)], style);
-        text.setShadow(1, 1, 'rgba(0,0,0,1)', 3);
+        text.setShadow(4, 4, '#282525', 3);
         text.setTextBounds(0, 80, 800, 100);
         game.add.button(game.world.width-480, game.world.height-200,
             'button-start', this.startGame);
         game.add.button(game.world.width-460, game.world.height-120,
             'button_register', this.Registration);
-        game.add.button(0,0,
-            'button_quit', this.end);
 
     //Makes it snow 
     back_emitter = game.add.emitter(game.world.centerX, -32, 600);
