@@ -5,13 +5,18 @@ var userlogin = require('./../controller/userlogin.js');
 module.exports = function(app, passport) {
 	app.post("/register", function(req, res) {
 		// pass req.body into usersignup.validate to validate and signup
-		usersignup.validate(req.body, req, res);
+		usersignup.validate(req.body, function(status) {
+			res.send(status);
+		});
 	});
 
-	app.post('/login',
-		passport.authenticate('local', { successRedirect: '/',
-		failureRedirect: '/' }),
-		function(req,res) {
-		}
-	);
+	app.post('/login', function(req, res, next) {
+		passport.authenticate('local', function(err, user, info) {
+			if (user == false) {
+				res.send('Incorrect username or password');
+			} else {
+				res.send('Login Successful');
+			}
+		})(req, res, next);
+	});
 }
