@@ -111,6 +111,14 @@ RPG.BattleState.prototype.show_player_actions = function (position) {
 
 RPG.BattleState.prototype.next_turn = function () {
     "use strict";
+    if (this.groups.enemy_units.countLiving() === 0) {
+        this.game_over();
+    }
+    
+    // if all player units are dead, restart the game
+    if (this.groups.player_units.countLiving() === 0) {
+        this.game_over();
+    }
     // takes the next unit
     this.current_unit = this.units.shift();
     // if the unit is alive, it acts, otherwise goes to the next turn
@@ -120,4 +128,10 @@ RPG.BattleState.prototype.next_turn = function () {
     } else {
         this.next_turn();
     }
+};
+
+RPG.BattleState.prototype.game_over = function () {
+    "use strict";
+    // go back to WorldState restarting the player position
+    game.state.start('levelOne', levelOneState);
 };
