@@ -319,6 +319,7 @@ function killedByHazard (player, fireBalls,spikeBall,spike,spike2) {
     if (lives ===0) {
          player.kill();
          console.log("You Died");
+         game.state.start('End')
     }
    console.log("You lost 1 Health");
    lives -= 1;
@@ -327,9 +328,6 @@ function killedByHazard (player, fireBalls,spikeBall,spike,spike2) {
 }
 /*function openChest(player, closedChest){
     closedChest.kill();
-   }
-   if (lives===0) {
-    game.state.start('End')
    }
 */
 }
