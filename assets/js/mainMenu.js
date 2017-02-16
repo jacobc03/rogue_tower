@@ -1,6 +1,13 @@
 var username, password, text;
 var message = ['Climb the tower if you seek glory', 'Climb the tower if you seek power',
     'Climb the tower if you seek riches', 'Climb the tower and become a god'];
+
+//Var for snow
+var max = 0,
+    back_emitter,
+    update_interval = 4 * 60,
+    i = 0;
+
 var MainMenuState = {
     create: function() {
         game.add.sprite(0, 0, 'background');
@@ -39,6 +46,19 @@ var MainMenuState = {
             'button_register', this.Registration);
         game.add.button(0,0,
             'button_quit', this.end);
+
+    //Makes it snow 
+    back_emitter = game.add.emitter(game.world.centerX, -32, 600);
+    back_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
+    back_emitter.maxParticleScale = 0.9;
+    back_emitter.minParticleScale = 0.2;
+    back_emitter.setYSpeed(20, 100);
+    back_emitter.gravity = 0;
+    back_emitter.width = game.world.width * 1.5;
+    back_emitter.minRotation = 10;
+    back_emitter.maxRotation = 80;
+    back_emitter.start(false, 14000, 20);
+    
     },
     startGame: function() {
         api.login(username.value, password.value, function(status, msg) {
