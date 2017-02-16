@@ -16,7 +16,7 @@ var PreloaderState = {
         game.load.spritesheet('snowflakes','./Graphics/snowflakes.png', 17, 17);
     },
     create: function() {
-        game.state.start('levelOne');
+        game.state.start('MainMenu');
 
     }
 }
