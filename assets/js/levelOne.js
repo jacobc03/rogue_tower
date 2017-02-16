@@ -259,7 +259,8 @@ function fightDragonScence (player, dragon) {
     
     // Removes the dragon from the screen
     dragon.kill();
-    game.state.start("BootState", true, false, "../levels/battle.json", "BattleState");
+    var random = Math.floor((Math.random() * 4) + 1);
+    game.state.start("BootState", true, false, "../levels/battle"+random+".json", "BattleState");
 
    // this.state.start('battle');
 
@@ -272,7 +273,8 @@ function fightCreepsScence (player, creeps) {
     
     // Removes the creep from the screen
    creeps.kill();
-   game.state.start("BootState", true, false, "../levels/battle.json", "BattleState");
+   var random = Math.floor((Math.random() * 4) + 1);
+    game.state.start("BootState", true, false, "../levels/battle"+random+".json", "BattleState");
 
    // this.state.start('battle');
 
