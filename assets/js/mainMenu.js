@@ -35,9 +35,9 @@ var MainMenuState = {
             'button_quit', this.end);
     },
     startGame: function() {
-        api.login(username.value, password.value);
-        password.resetText();
-        //game.state.start('levelOne');
+        //api.login(username.value, password.value);
+        //password.resetText();
+        game.state.start('levelOne');
     },
     Registration: function() {
         game.state.start('Registration');
