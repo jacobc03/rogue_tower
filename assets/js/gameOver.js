@@ -10,6 +10,8 @@ var EndState = {
             'button_quit');
     },
     startGame: function() {
+        newspawn = true;
+        reset();
         game.state.start('levelOne');
     },
     MainMenu: function() {

@@ -1,17 +1,3 @@
-var player,
-    platforms,
-    cursors,
-    time=1,
-    lives=100,
-    livesText,
-
-    level = 1,
-    levelText,
-
-    score = 0,
-    scoreText;
-
-
 var levelTwoState = {
     preload: function(){
         game.load.image('background', './Graphics/towerbackground.jpeg');
