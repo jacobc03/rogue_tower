@@ -1,4 +1,6 @@
-var username, password;
+var username, password, text;
+var message = ['Climb the tower if you seek glory', 'Climb the tower if you seek power',
+    'Climb the tower if you seek riches', 'Climb the tower and become a god'];
 var MainMenuState = {
     create: function() {
         game.add.sprite(0, 0, 'background');
@@ -27,17 +29,25 @@ var MainMenuState = {
             placeHolder: 'Password',
             type: PhaserInput.InputType.password
         });
+        var style = { font: "bold 22px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
+        text = game.add.text(0, 0, message[Math.floor(Math.random() * message.length)], style);
+        text.setShadow(1, 1, 'rgba(0,0,0,1)', 3);
+        text.setTextBounds(0, 80, 800, 100);
         game.add.button(game.world.width-480, game.world.height-200,
             'button-start', this.startGame);
-        game.add.button(game.world.width-460, game.world.height-140,
+        game.add.button(game.world.width-460, game.world.height-120,
             'button_register', this.Registration);
-        game.add.button(game.world.width-430, game.world.height-85,
+        game.add.button(0,0,
             'button_quit', this.end);
     },
     startGame: function() {
-        //api.login(username.value, password.value);
-        //password.resetText();
-        game.state.start('levelOne');
+        api.login(username.value, password.value, function(status, msg) {
+            if (status == true) { game.state.start('levelOne'); }
+            else {
+                text.setText(msg);
+                password.resetText();
+            }
+        });
     },
     Registration: function() {
         game.state.start('Registration');
