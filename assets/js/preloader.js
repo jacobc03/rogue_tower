@@ -1,19 +1,21 @@
-RogueTower.Preloader = function(game){
-    RogueTower.GAME_WIDTH = 800;
-    RogueTower.GAME_HEIGHT = 400;
-};
-
-RogueTower.Preloader.prototype = {
+var PreloaderState = {
     preload: function() {
-        this.load.crossOrigin = "Anonymous";
-        this.load.image('background', './Graphics/background.png');
-        this.load.image('title', './Graphics/title.png');
-        this.load.image('game-over', './Graphics/gameover.png');
-        this.load.spritesheet('button-start','./Graphics/button-start.png', 401, 143);
-        this.load.spritesheet('button_register','./Graphics/button_register.png', 401, 143);
+        game.load.crossOrigin = "Anonymous";
+        game.load.image('background', './Graphics/background8x6.jpg');
+        game.load.image('background', './Graphics/background.jpg');
+        game.load.image('gameOverBackground', './Graphics/gameoverbackground.jpeg');
+        game.load.image('title', './Graphics/title.png');
+        game.load.image('game-over', './Graphics/gameover.png');
+        game.load.spritesheet('button-start','./Graphics/button-start.png', 401, 143);
+        game.load.spritesheet('button_register','./Graphics/button_register.png', 401, 143);
+        game.load.spritesheet('button_submit','./Graphics/button_submit.png', 401, 143);
+        game.load.spritesheet('button_back','./Graphics/button_back.png', 401, 143)
+        game.load.spritesheet('button_main-menu','./Graphics/button_main-menu.png', 401, 143);
+        game.load.spritesheet('button_quit','./Graphics/button_quit.png', 401, 143);
+        game.load.spritesheet('button_restart','./Graphics/button_restart.png', 401, 143);
     },
     create: function() {
-        this.state.start('Registration');
-    }
-};
+        game.state.start('MainMenu');
 
+    }
+}

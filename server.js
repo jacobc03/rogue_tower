@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 var LocalStrategy = require('passport-local').Strategy;
 var db = require("./Node/models");
 var app = express();
@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
 });
 
 require('./Node/routes/htmlroutes.js')(app);
-require('./Node/routes/apiroutes.js')(app);
+require('./Node/routes/apiroutes.js')(app, passport);
 require('./Node/controller/userlogin.js')(passport, LocalStrategy);
 
 db.sequelize.sync().then(function() {

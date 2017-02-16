@@ -6,14 +6,14 @@ module.exports = function(passport, LocalStrategy) {
 		function(username, password, done) {
 			db.user.findOne({where: { username: username }}).then(function(user){
 				if (!user) {
-					console.log('Incorrect username.');
-					return done(null, false, {message: 'Incorrect username.'});
+					console.log("Incorrect username or password.");
+					return done(null, false, {message: 'Incorrect username or password.'});
 				}
 				let salt = '$2a$04$HN5eLtLO9ZYs.rHGr' + [...password].filter((a,i) => i<5).join('');
 				let hashpassword = bcrypt.hashSync(password, salt);
 				if (user.dataValues.password != hashpassword) {
-					console.log("Incorrect password.");
-					return done(null, false, {message: 'Incorrect password.'});
+					console.log("Incorrect username or password.");
+					return done(null, false, {message: 'Incorrect username or password.'});
 				}
 				return done(null, user);
 			});
