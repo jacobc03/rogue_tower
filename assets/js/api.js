@@ -1,15 +1,20 @@
 var api = {
-	login: function(username, password) {
+	login: function(username, password, cb) {
 		let user = {
 			username: username,
 			password: password
 		},
 			currentURL = window.location.origin;
 		$.post(currentURL + "/login", user, function(data){
-			console.log('loggedin')
+			if (data == 'Login Successful') {
+				cb(true, data);
+			}
+			else {
+				cb(false, data);
+			}
     	});
 	},
-	register: function(username, email, password1, password2){
+	register: function(username, email, password1, password2, cb){
 		let user = {
 			username: username,
 			email: email,
@@ -18,7 +23,12 @@ var api = {
 		},
 			currentURL = window.location.origin;
 		$.post(currentURL + "/register", user, function(data){
-			console.log('registered')
+			if (data == 'Signup successful') {
+				cb(true, data);
+			}
+			else {
+				cb(false, data);
+			}
     	});
 	}
 }
