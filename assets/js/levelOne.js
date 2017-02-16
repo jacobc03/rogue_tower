@@ -1,26 +1,15 @@
 var player,
     platforms,
     cursors,
-    time,
-    lives,
+    time=1,
+    lives=100,
     livesText,
 
-    level,
+    level = 1,
     levelText,
 
-    score,
+    score = 0,
     scoreText;
-
-var max = 0;
-var front_emitter;
-var mid_emitter;
-var back_emitter;
-var update_interval = 4 * 60;
-var i = 0;
-
-var reset = function() {
-    time=1, lives=100, level=1, score=0;
-}
 
 
 var levelOneState = {
@@ -41,45 +30,15 @@ var levelOneState = {
         game.load.image('fireball', './Graphics/fireball.png');
         game.load.image('closedchest', './Graphics/closedchest.png',37,42);
         game.load.image('openchest', './Graphics/openchest.png',37,42);
-        game.load.spritesheet('snowflakes', './Graphics/snowflakes.png', 17,17);
-
     },
 
     create: function() {
-    reset() // will set intial numbers
+        
         //  Enables the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  Makes a background for the game
     game.add.tileSprite(0, 0,800,600, 'background');
-
-
-
-back_emitter = game.add.emitter(game.world.centerX, -32, 600);
-    back_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
-    back_emitter.maxParticleScale = 0.6;
-    back_emitter.minParticleScale = 0.2;
-    back_emitter.setYSpeed(20, 100);
-    back_emitter.gravity = 0;
-    back_emitter.width = game.world.width * 1.5;
-    back_emitter.minRotation = 0;
-    back_emitter.maxRotation = 40;
-
-    mid_emitter = game.add.emitter(game.world.centerX, -32, 250);
-    mid_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
-    mid_emitter.maxParticleScale = 1.2;
-    mid_emitter.minParticleScale = 0.8;
-    mid_emitter.setYSpeed(50, 150);
-    mid_emitter.gravity = 0;
-    mid_emitter.width = game.world.width * 1.5;
-    mid_emitter.minRotation = 0;
-    mid_emitter.maxRotation = 40;
-
-
-
-    back_emitter.start(false, 14000, 20);
-    mid_emitter.start(false, 12000, 40);
-
 
     //  This platforms group holds the ground and ledges the user can jump on
     platforms = this.add.group();
@@ -94,7 +53,7 @@ back_emitter = game.add.emitter(game.world.centerX, -32, 600);
     ground.scale.setTo(8,3);
 
     //  This stops the ground from falling away when the user jumps on it
-    ground.body.immovable = true;
+    platforms.body.immovable = true;
 
     //  Creates the ledges and positions (width,height).Remember (0,0) is in top left corner
     var ledge = platforms.create(400, 460, 'ground');
@@ -102,23 +61,18 @@ back_emitter = game.add.emitter(game.world.centerX, -32, 600);
     ledge.body.immovable = true;
 
     ledge = platforms.create(Math.floor((Math.random() * 20) + 250), 420, 'ground');
-    ledge.body.immovable = true;
-
+    
     ledge = platforms.create(100, 350, 'ground');
-    ledge.body.immovable = true;
 
     ledge = platforms.create(280, 300, 'ground');
-    ledge.body.immovable = true;
-
+    
     ledge = platforms.create(420, 250, 'ground');
-    ledge.body.immovable = true;
 
     ledge = platforms.create(150, 200, 'ground');
-    ledge.body.immovable = true;
 
     //ledge for door1
     ledge = platforms.create(10, 250, 'ground');
-    ledge.body.immovable = true;
+    
     //ledge for door2
     ledge = platforms.create(600, 250, 'ground5');
     ledge.body.immovable = true;
@@ -142,7 +96,7 @@ back_emitter = game.add.emitter(game.world.centerX, -32, 600);
 
     //  Physics properties for sprites. Gave each a bounce for fun
     player.body.bounce.y = 0.1;
-    player.body.gravity.y = 600;
+    player.body.gravity.y = 440;
     player.body.collideWorldBounds = true;
 
     dragon.body.bounce.y = 0.5;
@@ -268,7 +222,7 @@ var fireBallInterval = setInterval(function(){
     if (cursors.up.isDown && player.body.touching.down)
     {
         //sets how high the player can jump
-        player.body.velocity.y = -325;
+        player.body.velocity.y = -260;
     }
     function nextLevelOption1 (player, door1) {
     
