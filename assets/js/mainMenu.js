@@ -33,11 +33,11 @@ var MainMenuState = {
         text = game.add.text(0, 0, message[Math.floor(Math.random() * message.length)], style);
         text.setShadow(1, 1, 'rgba(0,0,0,1)', 3);
         text.setTextBounds(0, 80, 800, 100);
-        game.add.button(game.world.width-480, game.world.height-180,
+        game.add.button(game.world.width-480, game.world.height-200,
             'button-start', this.startGame);
-        game.add.button(game.world.width-460, game.world.height-140,
+        game.add.button(game.world.width-460, game.world.height-120,
             'button_register', this.Registration);
-        game.add.button(0, 0,
+        game.add.button(0,0,
             'button_quit', this.end);
     },
     startGame: function() {
