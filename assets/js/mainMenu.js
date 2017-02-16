@@ -53,6 +53,6 @@ var MainMenuState = {
         game.state.start('Registration');
     },
     end: function() {
-        game.state.start('End')
+        game.state.start('levelOne')
     }
 }
