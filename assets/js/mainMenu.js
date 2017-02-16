@@ -35,7 +35,7 @@ var MainMenuState = {
         text.setTextBounds(0, 80, 800, 100);
         game.add.button(game.world.width-480, game.world.height-180,
             'button-start', this.startGame);
-        game.add.button(game.world.width-460, game.world.height-100,
+        game.add.button(game.world.width-460, game.world.height-140,
             'button_register', this.Registration);
         game.add.button(0, 0,
             'button_quit', this.end);
