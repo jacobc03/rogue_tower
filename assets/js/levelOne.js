@@ -1,21 +1,27 @@
 var player,
     platforms,
     cursors,
-    time=1,
-    lives=100,
+    time,
+    lives,
     livesText,
 
-    level = 1,
+    level,
     levelText,
 
-    score = 0,
+    score,
     scoreText;
+
 var max = 0;
 var front_emitter;
 var mid_emitter;
 var back_emitter;
 var update_interval = 4 * 60;
 var i = 0;
+
+var reset = function() {
+    time=1, lives=100, level=1, score=0;
+}
+
 
 var levelOneState = {
     preload: function(){
@@ -40,7 +46,7 @@ var levelOneState = {
     },
 
     create: function() {
-        
+    reset() // will set intial numbers
         //  Enables the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -136,7 +142,7 @@ back_emitter = game.add.emitter(game.world.centerX, -32, 600);
 
     //  Physics properties for sprites. Gave each a bounce for fun
     player.body.bounce.y = 0.1;
-    player.body.gravity.y = 440;
+    player.body.gravity.y = 600;
     player.body.collideWorldBounds = true;
 
     dragon.body.bounce.y = 0.5;
@@ -262,7 +268,7 @@ var fireBallInterval = setInterval(function(){
     if (cursors.up.isDown && player.body.touching.down)
     {
         //sets how high the player can jump
-        player.body.velocity.y = -260;
+        player.body.velocity.y = -325;
     }
     function nextLevelOption1 (player, door1) {
     
