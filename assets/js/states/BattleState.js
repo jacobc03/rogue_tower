@@ -149,5 +149,5 @@ RPG.BattleState.prototype.next_turn = function () {
 RPG.BattleState.prototype.game_over = function () {
     "use strict";
     // go back to WorldState restarting the player position
-    game.state.start('levelOne', levelOneState);
+    game.state.start('levelOne',true,false);
 };

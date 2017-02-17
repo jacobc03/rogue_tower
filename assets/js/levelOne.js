@@ -1,7 +1,7 @@
-var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch;
+var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
 console.log(level);
 var reset = function() {
-     time=1, HP=1000, score=0, level=1;
+      HP=1000, score=0, level=1;
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -47,10 +47,14 @@ var levelOneState = {
         ledge = [];
         // Pick scene will choose a scene to spawn
         Spawn.pickscene();
-
-
+        //stores the currentmap# in currentLevel
+        currentLevel=currentmap;
+        // console.log(currentLevel)
+        //console.log(currentmap);
+    
         // adds each of these sprites below with specific game location
-        player = game.add.sprite(32, this.world.height - 150, 'dude');
+      
+        player = game.add.sprite(xPlayer, yPlayer, 'dude');
       //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
         
         
@@ -166,13 +170,16 @@ var levelOneState = {
 
         //  Displays the level
         levelText = game.add.text(10, 560, 'Level: '+level, { fontSize: '16px', fill: '#000' });
-        scoreText = game.add.text(100, 560, 'Score: 0', { fontSize: '16px', fill: '#000' });
+        scoreText = game.add.text(100, 560, 'Score: '+score, { fontSize: '16px', fill: '#000' });
         spells = game.add.text(200, 560, 'Fire: 60', {fontSize: '16px', fill: '#000'});
         hpText = game.add.text(680, 560, 'HP: '+HP, {fontSize: '16px', fill: '#000'});
         //  Creates controls.
         cursors = this.input.keyboard.createCursorKeys();
     },
     update: function() {
+  //console.log(player.world.x);
+  //console.log(player.world.y);
+  //console.log(player.world);
         //  Collide sprites with platforms
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(dragon, platforms);
@@ -228,14 +235,27 @@ var levelOneState = {
         }
         // Handles collision for mobs
         function destroymob(player, dragon) {
-            dragon.kill();
+        
            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
+           //Stores player's current X postion so the player will reappear in same spot. 
+           xPlayer=player.world.x;
+           //Stores player's current Y postion so the player will reappear in same spot. 
+           yPlayer=player.world.y;
+           //Stores the currentLevel in the global currentmap var so the level doesn't change
+           currentmap=currentLevel;
+           dragon.kill();
+           //Tells us that the dragon has been killed
+           dragonKilled = true;
+           //Player gets 300 points for killing the dragon
+           score +=300;
+           scoreText.text = 'Score: ' + score;
+          
         }
         function destroyCreeps(player, creeps) {
             creeps.kill();
             console.log("test");
             var random = Math.floor((Math.random() * 4) + 1);
-            game.state.start("BootState", true, false, "../levels/battle"+random+".json", "BattleState");
+            game.state.start("BattleState", true, false);
         }
         function nextLevelOption1 (player, door1) {
             // Removes the door from the screen
@@ -244,10 +264,15 @@ var levelOneState = {
             //  Add and update the level
             level ++;
             levelText.text = 'Level: ' + level;
-            //  Add and update the score
-            score += 20;
+            //Player gets 100 points for advancing to the next level
+            score += 100;
             scoreText.text = 'Score: ' + score;
-            console.log("level:"+level);
+            //sets default coordinates for player
+            xPlayer=32,yPlayer=450
+            //randomizes next level
+            currentmap=Math.floor(Math.random() * ledgebuilderx.length);
+            //Makes sure the dragon comes back for the next map
+            dragonKilled = false;
         }
         function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
@@ -256,10 +281,16 @@ var levelOneState = {
             //  Add and update the level
             level ++;
             levelText.text = 'Level: ' + level;
-            //  Add and update the score
-            score += 20;
+            //Player gets 100 points for advancing to the next level
+            score += 100;
             scoreText.text = 'Score: ' + score;
-            console.log("level:"+level);
+            //sets default coordinates for player
+            xPlayer=32,yPlayer=450
+            //randomizes next level
+            currentmap=Math.floor(Math.random() * ledgebuilderx.length);
+            //Makes sure the dragon comes back for the next map
+            dragonKilled = false;  
+             
         }
         function destroyCreep (dragon, creeps) {
             // Removes the creep from the screen
