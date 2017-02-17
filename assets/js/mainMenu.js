@@ -2,6 +2,8 @@ var username, password, text;
 var message = ['Climb the tower if you seek glory', 'Climb the tower if you seek power',
     'Climb the tower if you seek riches', 'Climb the tower and become a god'];
 
+var music;
+
 //Var for snow
 var max = 0,
     back_emitter,
@@ -57,6 +59,9 @@ var MainMenuState = {
     back_emitter.maxRotation = 80;
     back_emitter.start(false, 14000, 20);
     
+    music = game.add.audio('music');
+
+    music.play();
     },
     startGame: function() {
         api.login(username.value, password.value, function(status, msg) {
