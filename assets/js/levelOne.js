@@ -1,7 +1,7 @@
-var player, platforms, cursors, time, lives, livesText, level, levelText, ledge, score, scoreText, newspawn;
+var player, platforms, cursors, time, lives, livesText, level, levelText, ledge, score, scoreText, newspawn, torch;
 
 var reset = function() {
-     time=1, lives=100, level=1, score=0;
+     time=1, lives=100, level=1, score=0, time=1;
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -17,13 +17,14 @@ var levelOneState = {
         game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
         game.load.image('dragon', './Graphics/dragon.png');
-        game.load.spritesheet('dude', './Graphics/dude.png', 37, 45,18);
+        game.load.spritesheet('dude', './Graphics/dude.png', 42, 45,35);
         game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
         game.load.image('spike', './Graphics/spike.png');
         game.load.image('spikeball', './Graphics/spikeball.png');
         game.load.image('fireball', './Graphics/fireball.png');
-        game.load.image('closedchest', './Graphics/closedchest.png',37,42);
+        game.load.image('potion', './Graphics/potion.png',37,42);
         game.load.image('openchest', './Graphics/openchest.png',37,42);
+        game.load.spritesheet('torch', './Graphics/torch.png', 32, 60);
     },
 
     create: function() {
@@ -50,7 +51,7 @@ var levelOneState = {
 
         // adds each of these sprites below with specific game location
         player = game.add.sprite(32, this.world.height - 150, 'dude');
-        dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
+      //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
         
         
 
@@ -59,8 +60,9 @@ var levelOneState = {
         game.physics.arcade.enable(dragon);
         game.physics.arcade.enable(door1);
         game.physics.arcade.enable(door2);
-        game.physics.arcade.enable(spikeBall);
-        game.physics.arcade.enable(closedChest);
+        game.physics.arcade.enable(spikeBall1);
+        game.physics.arcade.enable(spikeBall2);
+        game.physics.arcade.enable(potion);
 
         //  Physics properties for sprites. Gave each a bounce for fun
         player.body.bounce.y = 0.1;
@@ -79,13 +81,13 @@ var levelOneState = {
         door2.body.gravity.y = 300;
         door2.body.collideWorldBounds = true;
 
-        closedChest.body.bounce.y = 0.5;
-        closedChest.body.gravity.y = 300;
-        closedChest.body.collideWorldBounds = true;
+        potion.body.bounce.y = 0.5;
+        potion.body.gravity.y = 300;
+        potion.body.collideWorldBounds = true;
 
         //  Made Two animations for when the player is walking left and right
-        player.animations.add('left', [4, 5, 6], 10, true);
-        player.animations.add('right', [7, 8,9], 10, true);
+        player.animations.add('left', [9, 10, 11], 10, true);
+        player.animations.add('right', [28, 29,30], 10, true);
 
         creeps = this.add.group();
 
@@ -105,23 +107,38 @@ var levelOneState = {
             
         }
 
+        //  Created the torches group
+        torches = game.add.group();
+
+        //  adds 3 torches
+        for (var i = 0; i < 3; i++)
+        {
+            torches.create((i*100)+290, 300, 'torch', 0);
+        }
+
+        //  Use callAll to add animation to the torches group
+        torches.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
+
+        //  Plays the animation
+        torches.callAll('animations.play', 'animations', 'spin');
+
         fireBalls = this.add.group();
 
         //  Enables physics for any object that is the creeps group
         fireBalls.enableBody = true;
-    // created function to make fireballs that fall every 3 seconds
-    var fireBallInterval = setInterval(function(){
+        // created function to make fireballs that fall every 3 seconds
+        var fireBallInterval = setInterval(function(){
         if (time<=2) {
             for (var i = 1; i < 4; i++)
         {
             //  Creates a fireball
-            var fireBall = fireBalls.create(i * (Math.floor((Math.random() * 800)+ 1)), 0, 'fireball');
-        
+            var fireBall = fireBalls.create(i * (Math.floor((Math.random() * 800)+ 1)), 0, 'fireball');       
             //  Freefall speed
-            fireBall.body.gravity.y = 70;    
+            fireBall.body.gravity.y = 70;   
         }
+
         }
-    },3000);
+        },3000);
 
         //  Displays the level
         levelText = game.add.text(10, 560, 'Level: 1', { fontSize: '16px', fill: '#000' });
@@ -138,7 +155,7 @@ var levelOneState = {
         game.physics.arcade.collide(door1, platforms);
         game.physics.arcade.collide(door2, platforms);
         game.physics.arcade.collide(creeps, platforms);
-        game.physics.arcade.collide(closedChest, platforms);
+        game.physics.arcade.collide(potion, platforms);
      
         //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
         game.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
@@ -148,9 +165,10 @@ var levelOneState = {
         game.physics.arcade.overlap(player, creeps, destroyCreeps, null, this);
         // Player collision with hazards
         game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
-        game.physics.arcade.overlap(player, spikeBall, killedByHazard, null, this);
-        // Player collision with chests
-        game.physics.arcade.overlap(player, closedChest, openChest, null, this);
+        game.physics.arcade.overlap(player, spikeBall1, killedByHazard, null, this);
+        game.physics.arcade.overlap(player, spikeBall2, killedByHazard, null, this);
+        // Player collision with potions
+        game.physics.arcade.overlap(player, potion, openPotion, null, this);
         // Mob collision with other mobs
         game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
         game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
@@ -176,7 +194,7 @@ var levelOneState = {
             //  Stand still
             player.animations.stop();
 
-            player.frame = 1;
+            player.frame = 19;
         }
         //  The player can jump if they are touching the ground.
         if (cursors.up.isDown && player.body.touching.down)
@@ -198,7 +216,7 @@ var levelOneState = {
         function nextLevelOption1 (player, door1) {
             // Removes the door from the screen
             //door1.kill();
-            game.state.start('levelTwo');
+            game.state.start('levelOne');
             //  Add and update the level
             level += 1;
             levelText.text = 'Level: ' + level;
@@ -209,7 +227,7 @@ var levelOneState = {
         function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
             //door2.kill();
-            game.state.start('levelTwo');
+            game.state.start('levelOne');
             //  Add and update the level
             level += 1;
             levelText.text = 'Level: ' + level;
@@ -229,7 +247,7 @@ var levelOneState = {
             // Removes the creep from the screen
             creeps.kill();
         }
-        function killedByHazard (player, fireBalls,spikeBall) {
+        function killedByHazard (player, fireBalls,spikeBall1,spikeBall2) {
             // kills the player
             if (lives ===0) {
                  player.kill();
@@ -240,8 +258,11 @@ var levelOneState = {
            lives -= 1;
            livesText.text = 'Lives: ' + lives;
         }
-        function openChest(player, closedChest){
-            closedChest.kill();
+        function openPotion(player, potion){
+            potion.kill();
+            lives=100;
+            livesText.text = 'Lives: ' + lives;
         }
     }
 }
+

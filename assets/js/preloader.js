@@ -1,7 +1,8 @@
 var PreloaderState = {
     preload: function() {
         game.load.crossOrigin = "Anonymous";
-        game.load.image('background', './Graphics/background8x6.jpg');
+        game.load.audio('music', ['./audio/music.mp3']);
+        game.load.image('backgroundMain', './Graphics/background8x6.jpg');
         game.load.image('background', './Graphics/background.jpg');
         game.load.image('gameOverBackground', './Graphics/gameoverbackground.jpeg');
         game.load.image('title', './Graphics/title.png');
