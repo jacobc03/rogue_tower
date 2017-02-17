@@ -112,12 +112,12 @@ RPG.BattleState.prototype.show_player_actions = function (position) {
 RPG.BattleState.prototype.next_turn = function () {
     "use strict";
     if (this.groups.enemy_units.countLiving() === 0) {
-        this.game_over();
+        this.end_battle();
     }
     
     // if all player units are dead, restart the game
     if (this.groups.player_units.countLiving() === 0) {
-        this.game_over();
+        this.end_battle();
     }
     // takes the next unit
     this.current_unit = this.units.shift();
@@ -128,6 +128,22 @@ RPG.BattleState.prototype.next_turn = function () {
     } else {
         this.next_turn();
     }
+};
+
+RPG.BattleState.prototype.end_battle = function () {
+    "use strict";
+    
+    console.log("waddup");
+    this.groups.player_units.forEach(function (player_unit) {
+        
+        console.log(player_unit.stats);
+        
+        this.game.party_data[player_unit.name].stats = player_unit.stats;
+    }, this);
+    
+    console.log("waddup");
+    
+    this.game_over();
 };
 
 RPG.BattleState.prototype.game_over = function () {

@@ -145,7 +145,7 @@ var levelOneState = {
         game.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
         // Player collision with mobs
         game.physics.arcade.overlap(player, dragon, destroymob, null, this);
-        game.physics.arcade.overlap(player, creeps, destroymob, null, this);
+        game.physics.arcade.overlap(player, creeps, destroyCreeps, null, this);
         // Player collision with hazards
         game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
         game.physics.arcade.overlap(player, spikeBall, killedByHazard, null, this);
@@ -185,16 +185,15 @@ var levelOneState = {
             player.body.velocity.y = -260;
         }
         // Handles collision for mobs
-        function destroymob(player, dragon, creeps) {
-            if (dragon) {
-                dragon.kill();
-                game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
-            }
-            else if (creeps) {
-                creeps.kill();
-                var random = Math.floor((Math.random() * 4) + 1);
-                game.state.start("BootState", true, false, "../levels/battle"+random+".json", "BattleState");
-            }
+        function destroymob(player, dragon) {
+            dragon.kill();
+            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
+        }
+        function destroyCreeps(player, creeps) {
+            creeps.kill();
+            console.log("test");
+            var random = Math.floor((Math.random() * 4) + 1);
+            game.state.start("BootState", true, false, "../levels/battle"+random+".json", "BattleState");
         }
         function nextLevelOption1 (player, door1) {
             // Removes the door from the screen
