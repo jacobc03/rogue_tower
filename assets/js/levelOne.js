@@ -51,9 +51,7 @@ var levelOneState = {
 
         // adds each of these sprites below with specific game location
         player = game.add.sprite(32, this.world.height - 150, 'dude');
-      //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
-        
-        
+        //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');  
 
         //  adds physics to the each of the sprites below
         game.physics.arcade.enable(player);
@@ -210,11 +208,15 @@ var levelOneState = {
             else if (creeps) {
                 creeps.kill();
             }
+            var swordOne = game.add.audio('swordOne');
+            swordOne.play();
         }
         function nextLevelOption1 (player, door1) {
             // Removes the door from the screen
             //door1.kill();
             game.state.start('levelOne');
+            var door = game.add.audio('doorOpen');
+            door.play()
             //  Add and update the level
             level += 1;
             levelText.text = 'Level: ' + level;
@@ -225,6 +227,8 @@ var levelOneState = {
         function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
             //door2.kill();
+            var door = game.add.audio('doorOpen');
+            door.play()
             game.state.start('levelOne');
             //  Add and update the level
             level += 1;
