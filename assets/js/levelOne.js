@@ -1,7 +1,7 @@
-var player, platforms, cursors, time, lives, livesText, level, levelText, ledge, score, scoreText, newspawn, torch;
-
+var player, platforms, cursors, time, lives, livesText, level=1, levelText, ledge, score, scoreText, newspawn, torch;
+console.log(level);
 var reset = function() {
-     time=1, lives=100, level=1, score=0, time=1;
+     time=1, lives=100, score=0, time=1;
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -23,7 +23,7 @@ var levelOneState = {
         game.load.image('spikeball', './Graphics/spikeball.png');
         game.load.image('fireball', './Graphics/fireball.png');
         game.load.image('potion', './Graphics/potion.png',37,42);
-        game.load.image('openchest', './Graphics/openchest.png',37,42);
+        game.load.image('openchest', './Graphics/openchest.png',37,38);
         game.load.spritesheet('torch', './Graphics/torch.png', 32, 60);
     },
 
@@ -141,7 +141,7 @@ var levelOneState = {
         },3000);
 
         //  Displays the level
-        levelText = game.add.text(10, 560, 'Level: 1', { fontSize: '16px', fill: '#000' });
+        levelText = game.add.text(10, 560, 'Level: '+level, { fontSize: '16px', fill: '#000' });
         scoreText = game.add.text(100, 560, 'Score: 0', { fontSize: '16px', fill: '#000' });
         spells = game.add.text(200, 560, 'Fire: 60', {fontSize: '16px', fill: '#000'});
         livesText = game.add.text(680, 560, 'Lives: 100', {fontSize: '16px', fill: '#000'});
@@ -216,22 +216,24 @@ var levelOneState = {
             //door1.kill();
             game.state.start('levelOne');
             //  Add and update the level
-            level += 1;
+            level ++;
             levelText.text = 'Level: ' + level;
             //  Add and update the score
             score += 20;
             scoreText.text = 'Score: ' + score;
+            console.log(level);
         }
         function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
             //door2.kill();
             game.state.start('levelOne');
             //  Add and update the level
-            level += 1;
+            level ++;
             levelText.text = 'Level: ' + level;
             //  Add and update the score
             score += 20;
             scoreText.text = 'Score: ' + score;
+            console.log(level);
         }
         function destroyCreep (dragon, creeps) {
             // Removes the creep from the screen
