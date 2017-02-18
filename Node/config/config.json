@@ -15,7 +15,7 @@
   },
   "production": {
     "username": "projectrpg",
-    "password": "root",
+    "password": "Vf37!FG_6Fs9",
     "database": "projectrpg",
     "host": "mysql4.gear.host",
     "dialect": "mysql"
