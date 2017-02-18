@@ -139,5 +139,5 @@ RPG.BattleState.prototype.end_battle = function () {
 RPG.BattleState.prototype.game_over = function () {
     "use strict";
     // go back to WorldState restarting the player position
-    game.state.start('Boot');
+    game.state.start('End');
 };
