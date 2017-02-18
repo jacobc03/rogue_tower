@@ -17,8 +17,8 @@ var ledgebuilderx = [	[350, 200, 500, 50, 650, 200, 500, 350, 350, 50, 650],
 	potionbuilder = [[380, 80], [620, 360],[680, 20],[705,1],[350,40]],
 	spikebuilder1 = [[300,125],[300,125],[420,320],[280,380],[90,400]],
 	spikebuilder2 = [[525,400],[525,400],[525,320],[480,400],[180,20]],
-	dragonbuilder = [[525,100],[455,100],[300,100],[370,110],[360,150]];
-	creepbuilder = [[100,100],[100,100],[100,100],[100,110],[100,150]];
+	dragonbuilder = [[525,100],[455,100],[280,100],[370,110],[360,150]];
+	creepbuilder = [[200,300],[100,100],[130,280],[60,110],[80,150]];
 // current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
 	var currentmap = Math.floor(Math.random() * ledgebuilderx.length);
 // map 1: +- 150 to x; +70 to y;
