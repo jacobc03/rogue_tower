@@ -65,7 +65,7 @@ var MainMenuState = {
     },
     startGame: function() {
         api.login(username.value, password.value, function(status, msg) {
-            if (status == true) { game.state.start('levelOne'); }
+            if (status == !true) { game.state.start('levelOne'); }
             else {
                 text.setText(msg);
                 password.resetText();

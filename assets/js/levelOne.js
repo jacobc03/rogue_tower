@@ -1,10 +1,11 @@
-var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
+var player, party_data, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
 console.log(level);
 var reset = function() {
       HP=1000, score=0, level=1;
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
+
 
 var levelOneState = {
     preload: function(){
@@ -27,7 +28,7 @@ var levelOneState = {
         game.load.spritesheet('torch', './Graphics/torch.png', 32, 60);
     },
 
-    create: function() {
+    create: function(extra_parameters) {
         //  Enables the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //  Makes a background for the game
@@ -56,7 +57,39 @@ var levelOneState = {
       
         player = game.add.sprite(xPlayer, yPlayer, 'dude');
       //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
-        
+        party_data = extra_parameters.party_data || {
+            "health": 100
+            // "fighter": {
+            //     "type": "player_unit",
+            //     "position": {"x": 250, "y": 50},
+            //     "properties": {
+            //         "texture": "male_fighter_spritesheet",
+            //         "group": "player_units",
+            //         "frame": 10,
+            //         "stats": {
+            //             "attack": 20,
+            //             "magic_attack": 5,
+            //             "defense": 5,
+            //             "health": 100
+            //         }
+            //     }
+            // },
+            // "mage": {
+            //     "type": "player_unit",
+            //     "position": {"x": 250, "y": 100},
+            //     "properties": {
+            //         "texture": "female_mage_spritesheet",
+            //         "group": "player_units",
+            //         "frame": 10,
+            //         "stats": {
+            //             "attack": 5,
+            //             "magic_attack": 20,
+            //             "defense": 2,
+            //             "health": 100
+            //         }
+            //     }
+            // }
+        };
         
 
         //  adds physics to the each of the sprites below
@@ -235,8 +268,8 @@ var levelOneState = {
         }
         // Handles collision for mobs
         function destroymob(player, dragon) {
-        
-           game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
+           game.state.start("BootState", true, false, "../levels/battle1.json", "BattleState", party_data);
+                
            //Stores player's current X postion so the player will reappear in same spot. 
            xPlayer=player.world.x;
            //Stores player's current Y postion so the player will reappear in same spot. 

@@ -5,6 +5,8 @@ RPG.PlayerMenuItem = function (game_state, name, position, properties) {
     RPG.MenuItem.call(this, game_state, name, position, properties);
     
     this.player_unit_health = new RPG.ShowStat(this.game_state, this.text + "_health", {x: 280, y: this.y}, {group: "hud", text: "", style: properties.style, prefab: this.text, stat: "health"});
+
+    this.player_unit_mana = new RPG.ShowStat(this.game_state, this.text + "_health", {x: 280, y: this.y}, {group: "hud", text: "", style: properties.style, prefab: this.text, stat: "mana"});
 };
 
 RPG.PlayerMenuItem.prototype = Object.create(RPG.MenuItem.prototype);
