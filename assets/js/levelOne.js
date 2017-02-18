@@ -58,37 +58,36 @@ var levelOneState = {
         player = game.add.sprite(xPlayer, yPlayer, 'dude');
       //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
         party_data = extra_parameters.party_data || {
-            "health": 100
-            // "fighter": {
-            //     "type": "player_unit",
-            //     "position": {"x": 250, "y": 50},
-            //     "properties": {
-            //         "texture": "male_fighter_spritesheet",
-            //         "group": "player_units",
-            //         "frame": 10,
-            //         "stats": {
-            //             "attack": 20,
-            //             "magic_attack": 5,
-            //             "defense": 5,
-            //             "health": 100
-            //         }
-            //     }
-            // },
-            // "mage": {
-            //     "type": "player_unit",
-            //     "position": {"x": 250, "y": 100},
-            //     "properties": {
-            //         "texture": "female_mage_spritesheet",
-            //         "group": "player_units",
-            //         "frame": 10,
-            //         "stats": {
-            //             "attack": 5,
-            //             "magic_attack": 20,
-            //             "defense": 2,
-            //             "health": 100
-            //         }
-            //     }
-            // }
+            "fighter": {
+                "type": "player_unit",
+                "position": {"x": 250, "y": 50},
+                "properties": {
+                    "texture": "male_fighter_spritesheet",
+                    "group": "player_units",
+                    "frame": 10,
+                    "stats": {
+                        "attack": 20,
+                        "magic_attack": 5,
+                        "defense": 5,
+                        "health": 100
+                    }
+                }
+            },
+            "mage": {
+                "type": "player_unit",
+                "position": {"x": 250, "y": 100},
+                "properties": {
+                    "texture": "female_mage_spritesheet",
+                    "group": "player_units",
+                    "frame": 10,
+                    "stats": {
+                        "attack": 5,
+                        "magic_attack": 20,
+                        "defense": 2,
+                        "health": 100
+                    }
+                }
+            }
         };
         
 
