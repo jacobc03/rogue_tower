@@ -1,9 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-var session = require('express-session');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
+var session = require('express-session'); // replace session with cookiesession
 var LocalStrategy = require('passport-local').Strategy;
 var db = require("./Node/models");
 var app = express();
@@ -14,9 +15,15 @@ app.use(bodyParser.urlencoded ({ extended:true }));
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static(__dirname + '/assets'));
 app.use(cookieParser());
+app.use(cookieSession({ 
+  secret : '4564f6s4fdsfdfd',
+  cookie : {
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session({ secret: '4564f6s4fdsfdfd', resave: false, saveUninitialized: false }));
+// actually not using flash anymore as it doesn't fit with phaser
 app.use(flash());
 app.use(function(req, res, next) {
 	res.locals.errorMessage = req.flash('error')
