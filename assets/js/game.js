@@ -5,6 +5,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'Game');
 	game.state.add('Preloader', PreloaderState);
 	game.state.add('Registration', RegistrationState);
 	game.state.add('MainMenu', MainMenuState);
+	game.state.add('Leaderboard', LeaderboardState);
 	game.state.add("BootState", new RPG.BootState());
 	game.state.add("LoadingState", new RPG.LoadingState());
 	game.state.add("BattleState", new RPG.BattleState());

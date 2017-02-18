@@ -42,5 +42,11 @@ var api = {
 		$.post(currentURL + "/addscore", user, function(data){
 			console.log(data);
 		});
+	},
+	leaderboard: function(cb) {
+		let currentURL = window.location.origin;
+		$.get(currentURL + "/leaderboard", function(data){
+			cb(data);
+		})
 	}
 }

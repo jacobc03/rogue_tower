@@ -12,3 +12,5 @@ var newscore = {
     	})
 	}
 }
+
+module.exports = newscore;
