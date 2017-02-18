@@ -14,23 +14,8 @@ app.use(bodyParser.text());
 app.use(bodyParser.urlencoded ({ extended:true }));
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static(__dirname + '/assets'));
-/* replace session with cookie session
-var sess = {
-  secret: '4564f6s4fdsfdfd',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000*60*60 }
-}
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1); // trust first proxy 
-  sess.cookie.secure = true; // serve secure cookies 
-  sess.cookie.maxAge: 1000*60*60;
-}
-app.use(session(sess));
-*/
 app.use(cookieParser());
 app.use(cookieSession({ 
-  //key    : cookieKey,
   secret : '4564f6s4fdsfdfd',
   cookie : {
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
