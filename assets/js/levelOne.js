@@ -1,7 +1,7 @@
 var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
 console.log(level);
 var reset = function() {
-      HP=1000, score=0, level=1;
+      HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -17,7 +17,7 @@ var levelOneState = {
         game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
         game.load.image('dragon', './Graphics/dragon.png');
-        game.load.spritesheet('dude', './Graphics/dude.png', 42, 45,35);
+        game.load.spritesheet('dude', './Graphics/dude.png', 41, 45,35);
         game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
         game.load.image('spike', './Graphics/spike.png');
         game.load.image('spikeball', './Graphics/spikeball.png');
@@ -317,7 +317,7 @@ var levelOneState = {
         }
         function openPotion(player, potion){
             potion.kill();
-            HP+=500;
+            HP+=100;
             hpText.text = 'HP: ' + HP;
         }
     }
