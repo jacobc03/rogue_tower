@@ -68,7 +68,7 @@ var Spawn = {
 		//checks to see if the dragon has been killed or not
 		if (dragonKilled==false) {
 			var dragonmap = dragonbuilder[currentmap];
-		dragon  = game.add.sprite(dragonmap[0], dragonmap[1], 'dragon');
+		dragon  = game.add.sprite(dragonmap[0], dragonmap[1], 'dragon'); 
 		 // Made animation for dragon
         dragon.animations.add('start', [3,4, 5,12,6,7,8,8,14,17,18,19,,19,19,14], 3, true);
 		}	

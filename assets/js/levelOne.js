@@ -18,7 +18,7 @@ var levelOneState = {
         game.load.image('door', './Graphics/door.png');
         game.load.spritesheet('dragon', './Graphics/dragonsprite.png',126.4,102.4,21);
         game.load.spritesheet('creep', './Graphics/reptile.png',86.8,53,11);
-        game.load.spritesheet('dude', './Graphics/dude.png', 41, 45,35);
+        game.load.spritesheet('dude', './Graphics/dude1.png', 44.55, 44.5,35);
         game.load.image('spike', './Graphics/spike.png');
         game.load.image('spikeball', './Graphics/spikeball.png');
         game.load.image('fireball', './Graphics/fireball.png');
@@ -43,6 +43,7 @@ var levelOneState = {
         //  This stops the ground from falling away when the user jumps on it
         ground.body.immovable = true;
 
+        game.add.button(365, 548,'button_quit', this.Quit);
         // Set array to store spawned ledges
         ledge = [];
         // Pick scene will choose a scene to spawn
@@ -158,7 +159,6 @@ var levelOneState = {
         //  Displays the level
         levelText = game.add.text(10, 560, 'Level: '+level, { fontSize: '16px', fill: '#000' });
         scoreText = game.add.text(100, 560, 'Score: '+score, { fontSize: '16px', fill: '#000' });
-        spells = game.add.text(200, 560, 'Fire: 60', {fontSize: '16px', fill: '#000'});
         hpText = game.add.text(680, 560, 'HP: '+HP, {fontSize: '16px', fill: '#000'});
         //  Creates controls.
         cursors = this.input.keyboard.createCursorKeys();
@@ -266,7 +266,7 @@ var levelOneState = {
            //Tells us that the dragon has been killed
            creepKilled = true;
            //Player gets 300 points for killing the dragon
-           score +=300;
+           score +=50;
            scoreText.text = 'Score: ' + score;
            var swordOne = game.add.audio('swordOne');
             swordOne.play();
@@ -347,6 +347,9 @@ var levelOneState = {
             potion.kill();
             openedPotion=true;
         }
-    }
+    },
+     Quit: function() {
+        game.state.start('End');
+    },
 }
 
