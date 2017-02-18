@@ -61,7 +61,7 @@
                 "scale": {"x": 1.2, "y": 1.2},
                 "stats": {
                     "attack": 15,
-                    "defense": 5,
+                    "defense": 1,
                     "health": 100
                 }
             }
@@ -75,9 +75,9 @@
                 "frame": 18,
                 "scale": {"x": 3, "y": 3},
                 "stats": {
-                    "attack": 12,
-                    "defense": 4,
-                    "health": 120
+                    "attack": 9,
+                    "defense": 1,
+                    "health": 90
                 }
             }
         },
@@ -89,7 +89,7 @@
                 "group": "enemy_units",
                 "frame": 1,
                 "stats": {
-                    "attack": 5,
+                    "attack": 3,
                     "defense": 1,
                     "health": 20
                 }
@@ -103,7 +103,7 @@
                 "group": "enemy_units",
                 "frame": 1,
                 "stats": {
-                    "attack": 5,
+                    "attack": 3,
                     "defense": 1,
                     "health": 20
                 }
