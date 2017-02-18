@@ -19,8 +19,8 @@
             "properties": {
                 "texture": "grass_tile_image",
                 "group": "background",
-                "width": 320,
-                "height": 320
+                "width": 800,
+                "height": 600
             }
         },
         "enemy_rectangle": {

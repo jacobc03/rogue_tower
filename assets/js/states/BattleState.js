@@ -16,13 +16,13 @@ RPG.BattleState = function () {
 
 RPG.BattleState.prototype = Object.create(Phaser.State.prototype);
 RPG.BattleState.prototype.constructor = RPG.BattleState;
-
+var health = 0;
 RPG.BattleState.prototype.init = function (level_data, extra_parameters) {
-    console.log(extra_parameters);
+    console.log(extra_parameters.fighter.properties.stats.health);
     "use strict";
     this.level_data = level_data;
-    this.party_data = extra_parameters.party_data;
-    
+    // this.party_data = extra_parameters;
+    health = extra_parameters.fighter.properties.stats.health;
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;
@@ -74,7 +74,7 @@ RPG.BattleState.prototype.create_prefab = function (prefab_name, prefab_data) {
     var prefab;
     // create object according to its type
     if (this.prefab_classes.hasOwnProperty(prefab_data.type)) {
-        prefab = new this.prefab_classes[prefab_data.type](this, prefab_name, prefab_data.position, prefab_data.propertie);
+        prefab = new this.prefab_classes[prefab_data.type](this, prefab_name, prefab_data.position, prefab_data.properties);
     }
 };
 

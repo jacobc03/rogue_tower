@@ -1,10 +1,10 @@
 {
     "assets": {
         "rectangle_image": {"type": "image", "source": "./../Graphics/rectangle.png"},
-        "grass_tile_image": {"type": "image", "source": "./../Graphics/grass_tile.png"},
+        "grass_tile_image": {"type": "image", "source": "./../Graphics/Dungeon_Background.jpg"},
         "male_fighter_spritesheet": {"type": "spritesheet", "source": "./../Graphics/characters/fighter.png", "frame_width": 60, "frame_height": 65},
         "female_mage_spritesheet": {"type": "spritesheet", "source": "./../Graphics/characters/mage.png", "frame_width": 48, "frame_height": 65},
-        "bat_spritesheet": {"type": "spritesheet", "source": "./../Graphics/monsters/demonic_essence.png", "frame_width": 128, "frame_height": 128}
+        "bat_spritesheet": {"type": "spritesheet", "source": "./../Graphics/dragonsprite.png", "frame_width": 222, "frame_height": 265}
     },
     "groups": [
         "background",
@@ -19,13 +19,13 @@
             "properties": {
                 "texture": "grass_tile_image",
                 "group": "background",
-                "width": 320,
-                "height": 320
+                "width": 800,
+                "height": 600
             }
         },
         "enemy_rectangle": {
             "type": "rectangle",
-            "position": {"x": 0, "y": 200},
+            "position": {"x": 220, "y": 0},
             "properties": {
                 "texture": "rectangle_image",
                 "group": "hud",
@@ -34,7 +34,7 @@
         },
         "action_rectangle": {
             "type": "rectangle",
-            "position": {"x": 96, "y": 200},
+            "position": {"x": 316, "y": 0},
             "properties": {
                 "texture": "rectangle_image",
                 "group": "hud",
@@ -43,7 +43,7 @@
         },
         "player_rectangle": {
             "type": "rectangle",
-            "position": {"x": 192, "y": 200},
+            "position": {"x": 412, "y": 0},
             "properties": {
                 "texture": "rectangle_image",
                 "group": "hud",
@@ -52,11 +52,12 @@
         },
         "fighter": {
             "type": "player_unit",
-            "position": {"x": 250, "y": 50},
+            "position": {"x": 200, "y": 450},
             "properties": {
                 "texture": "male_fighter_spritesheet",
                 "group": "player_units",
                 "frame": 19,
+                "scale": {"x": 1.2, "y": 1.2},
                 "stats": {
                     "attack": 15,
                     "defense": 5,
@@ -64,26 +65,14 @@
                 }
             }
         },
-        "mage": {
-            "type": "player_unit",
-            "position": {"x": 250, "y": 150},
-            "properties": {
-                "texture": "female_mage_spritesheet",
-                "group": "player_units",
-                "frame": 18,
-                "stats": {
-                    "attack": 20,
-                    "defense": 2,
-                    "health": 100
-                }
-            }
-        },
         "boss": {
             "type": "enemy_unit",
-            "position": {"x": 100, "y": 90},
+            "position": {"x": 620, "y": 450},
             "properties": {
                 "texture": "bat_spritesheet",
                 "group": "enemy_units",
+                "frame": 18,
+                "scale": {"x": 3, "y": 3},
                 "stats": {
                     "attack": 25,
                     "defense": 4,
