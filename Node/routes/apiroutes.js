@@ -1,6 +1,7 @@
 // api routes will contain the routes that allow the game to interact with sequelize and the database
 var usersignup = require('./../controller/usersignup.js');
 var userlogin = require('./../controller/userlogin.js');
+var newscore = require('./../controller/newscore.js');
 
 module.exports = function(app, passport) {
 	app.post("/register", function(req, res) {
@@ -19,4 +20,10 @@ module.exports = function(app, passport) {
 			}
 		})(req, res, next);
 	});
+
+	app.post('/addscore', function(req, res) {
+		newscore.add(req.body, function(status) {
+			res.send(status);
+		})
+	})
 }

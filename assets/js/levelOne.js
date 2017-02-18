@@ -309,6 +309,7 @@ var levelOneState = {
             if (HP ===0) {
                  player.kill();
                  console.log("You Died");
+                 api.addscore(score);
                  game.state.start('End')
             }
            console.log("You lost 1 Health");
