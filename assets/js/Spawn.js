@@ -1,30 +1,33 @@
-var currentmap; // current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
-				// each ledge being an individual index. the arrays for doorbuilder1&2 + chestbuilder + spikebuilder will match
+
+// each ledge being an individual index. the arrays for doorbuilder1&2 + chestbuilder + spikebuilder will match
 var ledgebuilderx = [	[350, 200, 500, 50, 650, 200, 500, 350, 350, 50, 650],
 						[50, 200, 50, 200, 50, 200, 450, 600, 460, 600, 600, 700],
 						[400, 260, 100, 280, 420, 150, 570, 600, 10, 650],
 						[70,160,360,560,700,560,420,350,250,10,680,610],
-						[350,350,200,500,680,20,500,200,130,20,350]	],
+						[350,370,190,510,680,20,500,200,130,20,350]	],
 	
 	ledgebuildery = [	[465, 395, 395, 325, 325, 255, 255, 185, 115, 185, 185],
 						[465, 395, 325, 255, 185, 115, 115, 185, 255, 325, 395, 115],
 						[460, 420, 350, 285, 250, 200, 200, 150, 250, 100],
 						[460,400,400,400,350, 280,220,220,180,300,80,150],
-						[465,250,420,420,350,350,280,280,190,120,120]	],
+						[465,250,410,410,350,350,280,280,190,120,120]	],
 	
 	doorbuilder1 = [[70, 125], [720, 55],[10,150],[15,200],[30,40]],
-	doorbuilder2 = [[670, 120], [720, 55],[680, 20],[705,1],[350,40]],
+	doorbuilder2 = [[670, 120], [220, 0],[680, 20],[705,1],[350,40]],
 	potionbuilder = [[380, 80], [620, 360],[150, 140],[610,65],[140,0]],
 	spikebuilder1 = [[300,125],[300,125],[420,320],[280,380],[90,400]],
 	spikebuilder2 = [[525,400],[525,400],[525,320],[480,400],[180,20]],
 	dragonbuilder = [[525,100],[455,100],[300,100],[370,110],[360,150]];
+
+// current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
+	var currentmap = Math.floor(Math.random() * ledgebuilderx.length);
 // map 1: +- 150 to x; +70 to y;
 // doors: +20 to x to center; -60 to y to place ontop;
 // potions: +40 to x to center; -35 to y to place ontop;
 var Spawn = {
-	pickscene: function() {
+	pickscene: function(currentmap) {
 		newspawn = false;
-		currentmap = Math.floor(Math.random() * ledgebuilderx.length);
+		currentmap;
 		Spawn.ledge();
         Spawn.potion();
         Spawn.door();
@@ -58,8 +61,11 @@ var Spawn = {
 		spikeBall2  = game.add.sprite(spikemap2[0], spikemap2[1], 'spikeball');
 	},
 	dragon: function() {
-		var dragonmap = dragonbuilder[currentmap];
+		//checks to see if the dragon has been killed or not
+		if (dragonKilled==false) {
+			var dragonmap = dragonbuilder[currentmap];
 		dragon  = game.add.sprite(dragonmap[0], dragonmap[1], 'dragon');
+		}
 		
 	}
 }
