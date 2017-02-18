@@ -1,7 +1,7 @@
 var player, party_data, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
 console.log(level);
 var reset = function() {
-      HP=1000, score=0, level=1;
+      HP=100, score=0, level=1;
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -54,7 +54,6 @@ var levelOneState = {
         //console.log(currentmap);
     
         // adds each of these sprites below with specific game location
-      
         player = game.add.sprite(xPlayer, yPlayer, 'dude');
       //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
         party_data = extra_parameters.party_data || {
@@ -72,24 +71,8 @@ var levelOneState = {
                         "health": 100
                     }
                 }
-            },
-            "mage": {
-                "type": "player_unit",
-                "position": {"x": 250, "y": 100},
-                "properties": {
-                    "texture": "female_mage_spritesheet",
-                    "group": "player_units",
-                    "frame": 10,
-                    "stats": {
-                        "attack": 5,
-                        "magic_attack": 20,
-                        "defense": 2,
-                        "health": 100
-                    }
-                }
             }
         };
-        
 
         //  adds physics to the each of the sprites below
         game.physics.arcade.enable(player);
@@ -266,6 +249,7 @@ var levelOneState = {
             player.body.velocity.y = -260;
         }
         // Handles collision for mobs
+
         function destroymob(player, dragon) {
            game.state.start("BootState", true, false, "../levels/battle1.json", "BattleState", party_data);
                 
@@ -281,18 +265,22 @@ var levelOneState = {
            //Player gets 300 points for killing the dragon
            score +=300;
            scoreText.text = 'Score: ' + score;
-          
+           var swordOne = game.add.audio('swordOne');
+            swordOne.play();
         }
         function destroyCreeps(player, creeps) {
             creeps.kill();
             console.log("test");
             var random = Math.floor((Math.random() * 4) + 1);
             game.state.start("BattleState", true, false);
+
         }
         function nextLevelOption1 (player, door1) {
             // Removes the door from the screen
             //door1.kill();
             game.state.start('levelOne');
+            var door = game.add.audio('doorOpen');
+            door.play()
             //  Add and update the level
             level ++;
             levelText.text = 'Level: ' + level;
@@ -309,6 +297,8 @@ var levelOneState = {
         function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
             //door2.kill();
+            var door = game.add.audio('doorOpen');
+            door.play()
             game.state.start('levelOne');
             //  Add and update the level
             level ++;
@@ -341,6 +331,7 @@ var levelOneState = {
             if (HP ===0) {
                  player.kill();
                  console.log("You Died");
+                 api.addscore(score);
                  game.state.start('End')
             }
            console.log("You lost 1 Health");
