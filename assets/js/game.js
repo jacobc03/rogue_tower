@@ -8,7 +8,6 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'Game');
 	game.state.add("BootState", new RPG.BootState());
 	game.state.add("LoadingState", new RPG.LoadingState());
 	game.state.add("BattleState", new RPG.BattleState());
-	//game.state.add('hud', hudState);
 	game.state.add('levelOne', levelOneState);
 	game.state.add('levelTwo', levelTwoState);
 	game.state.add('End', EndState);
