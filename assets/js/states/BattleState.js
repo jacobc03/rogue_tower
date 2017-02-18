@@ -17,10 +17,11 @@ RPG.BattleState = function () {
 RPG.BattleState.prototype = Object.create(Phaser.State.prototype);
 RPG.BattleState.prototype.constructor = RPG.BattleState;
 
-RPG.BattleState.prototype.init = function (level_data) {
+RPG.BattleState.prototype.init = function (level_data, extra_parameters) {
     "use strict";
+    console.log(extra_parameters.fighter.properties.stats.health);
     this.level_data = level_data;
-    
+    this.party_data = extra_parameters;
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;
@@ -49,7 +50,13 @@ RPG.BattleState.prototype.create = function () {
     
     // create units array with player and enemy units
     this.units = [];
-    this.units = this.units.concat(this.groups.player_units.children);
+    // this.units = this.units.concat(this.groups.player_units.children);
+    for (player_unit_name in this.party_data) {
+        if (this.party_data.hasOwnProperty(player_unit_name)) {
+            // create player units
+            this.create_prefab(player_unit_name, this.party_data[player_unit_name]);
+        }
+    }
     this.units = this.units.concat(this.groups.enemy_units.children);
     
     this.next_turn();
@@ -69,13 +76,13 @@ RPG.BattleState.prototype.init_hud = function () {
     var unit_index, player_unit_health;
     
     // show player actions
-    this.show_player_actions({x: 106, y: 210});
+    this.show_player_actions({x: 326, y: 10});
     
     // show player units
-    this.show_units("player_units", {x: 202, y: 210}, RPG.PlayerMenuItem.prototype.constructor);
+    this.show_units("player_units", {x: 422, y: 10}, RPG.PlayerMenuItem.prototype.constructor);
     
     // show enemy units
-    this.show_units("enemy_units", {x: 10, y: 210}, RPG.EnemyMenuItem.prototype.constructor);
+    this.show_units("enemy_units", {x: 230, y: 10}, RPG.EnemyMenuItem.prototype.constructor);
 };
 
 RPG.BattleState.prototype.show_units = function (group_name, position, menu_item_constructor) {
@@ -112,7 +119,7 @@ RPG.BattleState.prototype.show_player_actions = function (position) {
 RPG.BattleState.prototype.next_turn = function () {
     "use strict";
     if (this.groups.enemy_units.countLiving() === 0) {
-        this.game_over();
+        this.end_battle();
     }
     
     // if all player units are dead, restart the game
@@ -130,24 +137,21 @@ RPG.BattleState.prototype.next_turn = function () {
     }
 };
 
-// RPG.BattleState.prototype.end_battle = function () {
-//     "use strict";
+RPG.BattleState.prototype.end_battle = function () {
+    "use strict";
     
-//     console.log("waddup");
-//     this.groups.player_units.forEach(function (player_unit) {
-        
-//         console.log(player_unit.stats);
-        
-//         this.game.party_data[player_unit.name].stats = player_unit.stats;
-//     }, this);
+    // receive battle reward
+    this.groups.player_units.forEach(function (player_unit) {
+        this.party_data[player_unit.name].properties.stats = player_unit.stats;
+    }, this);
+
     
-//     console.log("waddup");
-    
-//     this.game_over();
-// };
+    // go back to WorldState with the current party data
+    this.game.state.start("BootState", true, false, "levelOne", {party_data: this.party_data});
+};
 
 RPG.BattleState.prototype.game_over = function () {
     "use strict";
     // go back to WorldState restarting the player position
-    game.state.start('levelOne', levelOneState);
+    game.state.start('gameOver');
 };
