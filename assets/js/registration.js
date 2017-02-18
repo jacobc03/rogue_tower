@@ -57,9 +57,10 @@ var RegistrationState = {
             placeHolder: 'Confirm Password',
             type: PhaserInput.InputType.password
         });
-        var style = { font: "bold 20px Arial", fill: "#9e9e9e", boundsAlignH: "center", boundsAlignV: "middle"};
+        var style = { font: "bold 22px Arial", fill: "#749694", boundsAlignH: "center", boundsAlignV: "middle"};
         text = game.add.text(0, 0, 'Username must be 5 characters. Password must be 8 characters long.', style);
-        text.setShadow(4, 4, '#282525', 3);
+        text.stroke = "#000";
+        text.strokeThickness = 3;
         text.setTextBounds(0, 80, 800, 100);
         game.add.button(game.world.width-460, game.world.height-140,
             'button_submit', this.Submit);

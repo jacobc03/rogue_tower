@@ -1,7 +1,7 @@
 var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
 console.log(level);
 var reset = function() {
-      HP=1000, score=0, level=1;
+      HP=100, score=0, level=1;
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -314,6 +314,7 @@ var levelOneState = {
             if (HP ===0) {
                  player.kill();
                  console.log("You Died");
+                 api.addscore(score);
                  game.state.start('End')
             }
            console.log("You lost 1 Health");
