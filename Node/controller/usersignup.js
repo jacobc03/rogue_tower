@@ -18,6 +18,11 @@ usersignup = {
 			return cb("Username can only contain letters, numbers, - or _");
 		}
 
+		if (!email.includes('@')) {
+			console.log("Please provide a valid email");
+			return cb("Please provide a valid email");
+		}
+
 		db.user.findOne({where: { username: username }}).then(function(user){
 			if (user) {
 				console.log("Username already exists");
