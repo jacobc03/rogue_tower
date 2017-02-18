@@ -42,7 +42,7 @@ var levelOneState = {
         ground.scale.setTo(8,3);
         //  This stops the ground from falling away when the user jumps on it
         ground.body.immovable = true;
-
+        //adds Quit button to game
         game.add.button(365, 548,'button_quit', this.Quit);
         // Set array to store spawned ledges
         ledge = [];
@@ -63,7 +63,7 @@ var levelOneState = {
         game.physics.arcade.enable(dragon);
         game.physics.arcade.enable(creep);
         game.physics.arcade.enable(door1);
-      //  game.physics.arcade.enable(door2);
+     // game.physics.arcade.enable(door2);
         game.physics.arcade.enable(spikeBall1);
         game.physics.arcade.enable(spikeBall2);
         game.physics.arcade.enable(potion);
@@ -85,7 +85,7 @@ var levelOneState = {
         door1.body.gravity.y = 300;
         door1.body.collideWorldBounds = true;
 
-   /*     door2.body.bounce.y = 0.5;
+   /*   door2.body.bounce.y = 0.5;
         door2.body.gravity.y = 300;
         door2.body.collideWorldBounds = true;
     */
@@ -96,24 +96,21 @@ var levelOneState = {
         //  Made Two animations for when the player is walking left and right
         player.animations.add('left', [9, 10, 11], 10, true);
         player.animations.add('right', [28, 29,30], 10, true);
-        // Made animation for dragon
- 
 
         //  Created the torches group
         torches = game.add.group();
-
         //  adds 3 torches
         for (var i = 0; i < 3; i++)
         {
             torches.create((i*100)+290, 300, 'torch', 0);
         }
-
         //  Use callAll to add animation to the torches group
         torches.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
-
         //  Plays the animation
         torches.callAll('animations.play', 'animations', 'spin');
 
+
+        //creates fireBalls group
         fireBalls = this.add.group();
 
         //  Enables physics for any object that is the fireBalls group
@@ -171,26 +168,30 @@ var levelOneState = {
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(dragon, platforms);
         game.physics.arcade.collide(door1, platforms);
-   //     game.physics.arcade.collide(door2, platforms);
+   //   game.physics.arcade.collide(door2, platforms);
         game.physics.arcade.collide(creep, platforms);
         game.physics.arcade.collide(potion, platforms);
      
         //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
         game.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
-  //      game.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
+  //    game.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
+        
         // Player collision with mobs
         game.physics.arcade.overlap(player, dragon, destroymob, null, this);
         game.physics.arcade.overlap(player, creep, destroyCreep, null, this);
+        
         // Player collision with hazards
         game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
         game.physics.arcade.overlap(player, spikeBall1, killedByHazard, null, this);
         game.physics.arcade.overlap(player, spikeBall2, killedByHazard, null, this);
         // Player collision with potions
         game.physics.arcade.overlap(player, potion, openPotion, null, this);
+       
         // Mob collision with other mobs
      //   game.physics.arcade.overlap(dragon, creep, destroyCreep, null, this);
     //    game.physics.arcade.overlap(door1, creep, destroyCreep2, null, this);
    //     game.physics.arcade.overlap(door2, creep, destroyCreep3, null, this);     
+       
         //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
         if (cursors.left.isDown)
@@ -348,6 +349,7 @@ var levelOneState = {
             openedPotion=true;
         }
     },
+    //Brings player to game over screen.
      Quit: function() {
         game.state.start('End');
     },

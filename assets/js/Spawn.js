@@ -52,7 +52,6 @@ var Spawn = {
 			var potionmap = potionbuilder[currentmap];
 		potion = game.add.sprite(potionmap[0], potionmap[1], 'potion');
 		}
-		
 	},
 	door: function() {
 		var door1map = doorbuilder1[currentmap]; //door2map = doorbuilder2[currentmap];
@@ -74,7 +73,7 @@ var Spawn = {
 		}	
 	},
 	creep: function() {
-		//checks to see if the dragon has been killed or not
+		//checks to see if the creep has been killed or not
 		if (creepKilled==false) {
 			var creepmap = creepbuilder[currentmap];
 		creep  = game.add.sprite(creepmap[0], creepmap[1], 'creep');
