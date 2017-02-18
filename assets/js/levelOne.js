@@ -256,7 +256,8 @@ var levelOneState = {
             swordOne.play();
         }
         function destroyCreep(player, creep) {
-            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
+            var random = Math.floor((Math.random() * 4) + 1);
+            game.state.start("BootState", true, false, "../levels/battle"+random+".json", "BattleState");
            //Stores player's current X postion so the player will reappear in same spot. 
            xPlayer=player.world.x;
            //Stores player's current Y postion so the player will reappear in same spot. 
