@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "projectrpg",
+    "password": "Vf37!FG_6Fs9",
+    "database": "projectrpg",
+    "host": "mysql4.gear.host",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "projectrpg",
+    "password": "Vf37!FG_6Fs9",
+    "database": "database_test",
+    "host": "mysql4.gear.host",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "projectrpg",
+    "password": "root",
+    "database": "projectrpg",
+    "host": "mysql4.gear.host",
+    "dialect": "mysql"
+  }
+}
