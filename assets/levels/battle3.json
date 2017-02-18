@@ -89,9 +89,9 @@
                 "group": "enemy_units",
                 "frame": 1,
                 "stats": {
-                    "attack": 3,
+                    "attack": 15,
                     "defense": 1,
-                    "health": 20
+                    "health": 10
                 }
             }
         }

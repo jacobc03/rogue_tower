@@ -75,7 +75,7 @@
                 "frame": 18,
                 "scale": {"x": 3, "y": 3},
                 "stats": {
-                    "attack": 9,
+                    "attack": 11,
                     "defense": 1,
                     "health": 90
                 }
