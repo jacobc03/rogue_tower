@@ -47,8 +47,11 @@ var Spawn = {
 	    }
 	},
 	potion: function() {
-		var potionmap = potionbuilder[currentmap];
+		if (openedPotion==false) {
+			var potionmap = potionbuilder[currentmap];
 		potion = game.add.sprite(potionmap[0], potionmap[1], 'potion');
+		}
+		
 	},
 	door: function() {
 		var door1map = doorbuilder1[currentmap], door2map = doorbuilder2[currentmap];

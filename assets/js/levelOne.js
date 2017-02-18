@@ -1,7 +1,7 @@
-var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false;
+var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,openedPotion=false;;
 console.log(level);
 var reset = function() {
-      HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
+      HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -273,6 +273,7 @@ var levelOneState = {
             currentmap=Math.floor(Math.random() * ledgebuilderx.length);
             //Makes sure the dragon comes back for the next map
             dragonKilled = false;
+            openedPotion = false;
         }
         function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
@@ -289,7 +290,8 @@ var levelOneState = {
             //randomizes next level
             currentmap=Math.floor(Math.random() * ledgebuilderx.length);
             //Makes sure the dragon comes back for the next map
-            dragonKilled = false;  
+            dragonKilled = false; 
+            openedPotion = false; 
              
         }
         function destroyCreep (dragon, creeps) {
@@ -319,6 +321,8 @@ var levelOneState = {
             potion.kill();
             HP+=100;
             hpText.text = 'HP: ' + HP;
+            potion.kill();
+            openedPotion=true;
         }
     }
 }
