@@ -90,7 +90,9 @@ var levelOneState = {
         //  Made Two animations for when the player is walking left and right
         player.animations.add('left', [9, 10, 11], 10, true);
         player.animations.add('right', [28, 29,30], 10, true);
- dragon.animations.add('start', [3,4, 5,12,6,7,8,8,14,17,18,19,,19,1914], 3, true);
+        // Made animation for dragon
+ 
+        
         creeps = this.add.group();
 
         //  Enables physics for any object that is the creeps group
@@ -231,8 +233,15 @@ var levelOneState = {
             //sets how high the player can jump
             player.body.velocity.y = -260;
         }
+
+if (dragonKilled==false) {
+    // Starts Dragon animation
+        dragon.animations.play('start');
+    }else if (dragonKilled==true) {
+        dragon.animations.stop();
+    }
         // Handles collision for mobs
- dragon.animations.play('start');
+ 
         function destroymob(player, dragon) {
         
            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
