@@ -1,7 +1,7 @@
 var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,creepKilled=false,openedPotion=false;
 
 var reset = function() {
-      HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,creepKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
+      HP=100, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,creepKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -333,6 +333,7 @@ var levelOneState = {
             if (HP ===0) {
                  player.kill();
                  console.log("You Died");
+                 api.addscore(score);
                  game.state.start('End')
             }
            console.log("You lost 1 Health");

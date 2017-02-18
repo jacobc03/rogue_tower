@@ -1,3 +1,4 @@
+var currentuser;
 var api = {
 	login: function(username, password, cb) {
 		let user = {
@@ -7,6 +8,7 @@ var api = {
 			currentURL = window.location.origin;
 		$.post(currentURL + "/login", user, function(data){
 			if (data == 'Login Successful') {
+				currentuser = user.username;
 				cb(true, data);
 			}
 			else {
@@ -30,5 +32,21 @@ var api = {
 				cb(false, data);
 			}
     	});
+	},
+	addscore: function(currentscore) {
+		let user = {
+			username: currentuser,
+			score: currentscore
+		},
+			currentURL = window.location.origin;
+		$.post(currentURL + "/addscore", user, function(data){
+			console.log(data);
+		});
+	},
+	leaderboard: function(cb) {
+		let currentURL = window.location.origin;
+		$.get(currentURL + "/leaderboard", function(data){
+			cb(data);
+		})
 	}
 }

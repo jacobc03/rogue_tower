@@ -12,7 +12,8 @@ var PreloaderState = {
         game.load.spritesheet('button-start','./Graphics/button-start.png', 401, 143);
         game.load.spritesheet('button_register','./Graphics/button_register.png', 401, 143);
         game.load.spritesheet('button_submit','./Graphics/button_submit.png', 401, 143);
-        game.load.spritesheet('button_back','./Graphics/button_back.png', 401, 143)
+        game.load.spritesheet('button_back','./Graphics/button_back.png', 401, 143);
+        game.load.spritesheet('button_leaderboard','./Graphics/button_leaderboard.png', 401, 143);
         game.load.spritesheet('button_main-menu','./Graphics/button_main-menu.png', 401, 143);
         game.load.spritesheet('button_quit','./Graphics/button_quit.png', 401, 143);
         game.load.spritesheet('button_restart','./Graphics/button_restart.png', 401, 143);
@@ -20,6 +21,5 @@ var PreloaderState = {
     },
     create: function() {
         game.state.start('MainMenu');
-
     }
 }
