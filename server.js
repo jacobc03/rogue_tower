@@ -7,6 +7,12 @@ var cookieParser = require('cookie-parser');
 var LocalStrategy = require('passport-local').Strategy;
 var db = require("./Node/models");
 var app = express();
+var sess = {
+  secret: '4564f6s4fdsfdfd',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {}
+}
 app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.json());
 app.use(bodyParser.text());
@@ -16,7 +22,11 @@ app.use(express.static(__dirname + '/assets'));
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session({ secret: '4564f6s4fdsfdfd', resave: false, saveUninitialized: false }));
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1) // trust first proxy 
+  sess.cookie.secure = true // serve secure cookies 
+}
+app.use(session(sess));
 app.use(flash());
 app.use(function(req, res, next) {
 	res.locals.errorMessage = req.flash('error')
