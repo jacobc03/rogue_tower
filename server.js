@@ -11,7 +11,7 @@ var sess = {
   secret: '4564f6s4fdsfdfd',
   resave: false,
   saveUninitialized: false,
-  cookie: {}
+  cookie: { maxAge: 1000*60*60 }
 }
 app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.json());
@@ -23,8 +23,9 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 if (app.get('env') === 'production') {
-  app.set('trust proxy', 1) // trust first proxy 
-  sess.cookie.secure = true // serve secure cookies 
+  app.set('trust proxy', 1); // trust first proxy 
+  sess.cookie.secure = true; // serve secure cookies 
+  sess.cookie.maxAge: 1000*60*60;
 }
 app.use(session(sess));
 app.use(flash());
