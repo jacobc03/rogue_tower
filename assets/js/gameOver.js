@@ -4,7 +4,6 @@ var EndState = {
     create: function() {
         endtext = [];
         endtexty = 50;
-        reset();
         game.add.sprite(0, 0, 'gameOverBackground');
         game.add.sprite((game.world.width-650), 40, 'game-over');
         game.add.button(game.world.width-320, 160,
@@ -36,7 +35,7 @@ var EndState = {
                 endtexty = endtexty+50;
             }
         });
-
+        reset();
     },
     startGame: function() {
         newspawn = true;
