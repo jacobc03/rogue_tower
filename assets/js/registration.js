@@ -1,7 +1,13 @@
 var username, email, password1, password2, text;
+
+var max = 0,
+    back_emitter,
+    update_interval = 4 * 60,
+    i = 0;
+
 var RegistrationState = {
 	create: function() {
-        game.add.sprite(0, 0, 'background');
+        game.add.sprite(0, 0, 'backgroundMain');
         game.add.sprite((game.world.width-650), 10, 'title');
         username = game.add.inputField(game.world.width-500, game.world.height-450, {
             font: '18px Arial',
@@ -51,14 +57,27 @@ var RegistrationState = {
             placeHolder: 'Confirm Password',
             type: PhaserInput.InputType.password
         });
-        var style = { font: "bold 22px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle"};
+        var style = { font: "bold 20px Arial", fill: "#9e9e9e", boundsAlignH: "center", boundsAlignV: "middle"};
         text = game.add.text(0, 0, 'Username must be 5 characters. Password must be 8 characters long.', style);
-        text.setShadow(1, 1, 'rgba(0,0,0,1)', 3);
+        text.setShadow(4, 4, '#282525', 3);
         text.setTextBounds(0, 80, 800, 100);
         game.add.button(game.world.width-460, game.world.height-140,
             'button_submit', this.Submit);
         game.add.button(game.world.width-445, game.world.height-80,
             'button_back', this.Back);
+
+        //Makes it snow 
+    back_emitter = game.add.emitter(game.world.centerX, -32, 600);
+    back_emitter.makeParticles('snowflakes', [0, 1, 2, 3, 4, 5]);
+    back_emitter.maxParticleScale = 0.9;
+    back_emitter.minParticleScale = 0.2;
+    back_emitter.setYSpeed(20, 100);
+    back_emitter.gravity = 0;
+    back_emitter.width = game.world.width * 1.5;
+    back_emitter.minRotation = 10;
+    back_emitter.maxRotation = 80;
+    back_emitter.start(false, 14000, 20);
+    
     },
     Submit: function() {
     	api.register(username.value, email.value, password1.value, password2.value, function(status, msg) {

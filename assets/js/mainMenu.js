@@ -61,7 +61,8 @@ var MainMenuState = {
     
     music = game.add.audio('music');
 
-    music.play();
+    music.play('',0,.25,true);
+
     },
     startGame: function() {
         api.login(username.value, password.value, function(status, msg) {
