@@ -1,4 +1,4 @@
-var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,openedPotion=false;;
+var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,openedPotion=false;
 
 var reset = function() {
       HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
@@ -16,7 +16,7 @@ var levelOneState = {
         game.load.image('ground5', './Graphics/RockTile5.png');
         game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
-        game.load.image('dragon', './Graphics/dragon.png');
+        game.load.spritesheet('dragon', './Graphics/dragonsprite.png',126.4,102.4,21);
         game.load.spritesheet('dude', './Graphics/dude.png', 41, 45,35);
         game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
         game.load.image('spike', './Graphics/spike.png');
@@ -90,7 +90,7 @@ var levelOneState = {
         //  Made Two animations for when the player is walking left and right
         player.animations.add('left', [9, 10, 11], 10, true);
         player.animations.add('right', [28, 29,30], 10, true);
-
+ dragon.animations.add('start', [3,4, 5,12,6,7,8,8,14,17,18,19,,19,1914], 3, true);
         creeps = this.add.group();
 
         //  Enables physics for any object that is the creeps group
@@ -232,7 +232,7 @@ var levelOneState = {
             player.body.velocity.y = -260;
         }
         // Handles collision for mobs
-
+ dragon.animations.play('start');
         function destroymob(player, dragon) {
         
            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
