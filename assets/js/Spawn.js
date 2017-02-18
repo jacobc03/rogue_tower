@@ -13,12 +13,12 @@ var ledgebuilderx = [	[350, 200, 500, 50, 650, 200, 500, 350, 350, 50, 650],
 						[465,250,410,410,350,350,280,280,190,120,120]	],
 	
 	doorbuilder1 = [[70, 125], [720, 55],[10,150],[15,200],[30,40]],
-	doorbuilder2 = [[670, 120], [220, 0],[680, 20],[705,1],[350,40]],
-	potionbuilder = [[380, 80], [620, 360],[150, 140],[610,65],[140,0]],
+	//doorbuilder2 = [[670, 120], [220, 0],[680, 20],[705,1],[350,40]],
+	potionbuilder = [[380, 80], [620, 360],[680, 20],[705,1],[350,40]],
 	spikebuilder1 = [[300,125],[300,125],[420,320],[280,380],[90,400]],
 	spikebuilder2 = [[525,400],[525,400],[525,320],[480,400],[180,20]],
-	dragonbuilder = [[525,100],[455,100],[300,100],[370,110],[360,150]];
-
+	dragonbuilder = [[525,100],[455,100],[280,100],[370,110],[360,150]];
+	creepbuilder = [[200,300],[100,100],[130,280],[60,110],[80,150]];
 // current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
 	var currentmap = Math.floor(Math.random() * ledgebuilderx.length);
 // map 1: +- 150 to x; +70 to y;
@@ -33,6 +33,7 @@ var Spawn = {
         Spawn.door();
         Spawn.spike();
         Spawn.dragon();
+        Spawn.creep();
 	},
 	ledge: function() {
 		// map 1: 11 ledges, map 2: 12 ledges
@@ -47,13 +48,15 @@ var Spawn = {
 	    }
 	},
 	potion: function() {
-		var potionmap = potionbuilder[currentmap];
+		if (openedPotion==false) {
+			var potionmap = potionbuilder[currentmap];
 		potion = game.add.sprite(potionmap[0], potionmap[1], 'potion');
+		}
 	},
 	door: function() {
-		var door1map = doorbuilder1[currentmap], door2map = doorbuilder2[currentmap];
+		var door1map = doorbuilder1[currentmap]; //door2map = doorbuilder2[currentmap];
 		door1 = game.add.sprite(door1map[0], door1map[1], 'door');
-        door2  = game.add.sprite(door2map[0], door2map[1], 'door');
+      //  door2  = game.add.sprite(door2map[0], door2map[1], 'door');
 	},
 	spike: function() {
 		var spikemap1 = spikebuilder1[currentmap], spikemap2 = spikebuilder2[currentmap] ;
@@ -64,8 +67,18 @@ var Spawn = {
 		//checks to see if the dragon has been killed or not
 		if (dragonKilled==false) {
 			var dragonmap = dragonbuilder[currentmap];
-		dragon  = game.add.sprite(dragonmap[0], dragonmap[1], 'dragon');
-		}
-		
+		dragon  = game.add.sprite(dragonmap[0], dragonmap[1], 'dragon'); 
+		 // Made animation for dragon
+        dragon.animations.add('start', [3,4, 5,12,6,7,8,8,14,17,18,19,,19,19,14], 3, true);
+		}	
+	},
+	creep: function() {
+		//checks to see if the creep has been killed or not
+		if (creepKilled==false) {
+			var creepmap = creepbuilder[currentmap];
+		creep  = game.add.sprite(creepmap[0], creepmap[1], 'creep');
+		 // Made animation for creep
+        creep.animations.add('start', [0,1,2,3,4,5,6,7,8,9,10], 3, true);
+		}	
 	}
 }
