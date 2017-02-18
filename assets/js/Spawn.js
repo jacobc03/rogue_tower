@@ -6,19 +6,20 @@ var ledgebuilderx = [	[350, 200, 500, 50, 650, 200, 500, 350, 350, 50, 650],
 						[70,160,360,560,700,560,420,350,250,10,680,610],
 						[350,370,190,510,680,20,500,200,130,20,350]	],
 	
-	ledgebuildery = [	[465, 395, 395, 325, 325, 255, 255, 185, 115, 185, 185],
-						[465, 395, 325, 255, 185, 115, 115, 185, 255, 325, 395, 115],
-						[460, 420, 350, 285, 250, 200, 200, 150, 250, 100],
-						[460,400,400,400,350, 280,220,220,180,300,80,150],
-						[465,250,410,410,350,350,280,280,190,120,120]	],
+	ledgebuildery = [	[458, 395, 395, 325, 325, 255, 255, 185, 115, 185, 185],
+						[458, 395, 325, 255, 185, 115, 115, 185, 255, 325, 395, 115],
+						[458, 420, 350, 285, 250, 200, 200, 150, 250, 100],
+						[458,400,400,400,350, 280,220,220,180,300,80,150],
+						[458,250,410,410,350,350,280,280,190,120,120]	],
 	
 	doorbuilder1 = [[70, 125], [720, 55],[10,150],[15,200],[30,40]],
 	//doorbuilder2 = [[670, 120], [220, 0],[680, 20],[705,1],[350,40]],
 	potionbuilder = [[380, 80], [620, 360],[680, 20],[705,1],[350,40]],
 	spikebuilder1 = [[300,125],[300,125],[420,320],[280,380],[90,400]],
 	spikebuilder2 = [[525,400],[525,400],[525,320],[480,400],[180,20]],
-	dragonbuilder = [[525,100],[455,100],[280,100],[370,110],[360,150]];
-	creepbuilder = [[200,300],[100,100],[130,280],[60,110],[80,150]];
+	dragonbuilder = [[525,100],[455,100],[280,100],[370,110],[360,150]],
+	creepbuilder = [[200,300],[100,100],[130,280],[60,110],[80,150]],
+	trollbuilder =[[301, 450], [301, 450],[301, 450],[301,450],[301,450]];
 // current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
 	var currentmap = Math.floor(Math.random() * ledgebuilderx.length);
 // map 1: +- 150 to x; +70 to y;
@@ -34,6 +35,7 @@ var Spawn = {
         Spawn.spike();
         Spawn.dragon();
         Spawn.creep();
+        Spawn.troll();
 	},
 	ledge: function() {
 		// map 1: 11 ledges, map 2: 12 ledges
@@ -79,6 +81,16 @@ var Spawn = {
 		creep  = game.add.sprite(creepmap[0], creepmap[1], 'creep');
 		 // Made animation for creep
         creep.animations.add('start', [0,1,2,3,4,5,6,7,8,9,10], 3, true);
+		}	
+	},
+	troll: function() {
+		//checks to see if the creep has been killed or not
+		if (trollKilled==false) {
+			var trollmap = trollbuilder[currentmap];
+		troll  = game.add.sprite(trollmap[0], trollmap[1], 'troll');
+		 // Made animation for creep34,35,36,37
+        troll.animations.add('right', [0], 3, true);
+        troll.animations.add('left', [2], 3, true);
 		}	
 	}
 }

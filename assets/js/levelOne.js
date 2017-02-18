@@ -1,7 +1,7 @@
-var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,creepKilled=false,openedPotion=false;
+var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,creepKilled=false,trollKilled=false,openedPotion=false;
 
 var reset = function() {
-      HP=100, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,creepKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
+      HP=100, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,creepKilled=false,openedPotion=false,trollKilled=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -19,6 +19,7 @@ var levelOneState = {
         game.load.spritesheet('dragon', './Graphics/dragonsprite.png',126.4,102.4,21);
         game.load.spritesheet('creep', './Graphics/reptile.png',86.8,53,11);
         game.load.spritesheet('dude', './Graphics/dude1.png', 44.55, 44.5,35);
+        game.load.spritesheet('troll', './Graphics/troll1.png', 41.5, 52.5,3);
         game.load.image('spike', './Graphics/spike.png');
         game.load.image('spikeball', './Graphics/spikeball.png');
         game.load.image('fireball', './Graphics/fireball.png');
@@ -52,7 +53,8 @@ var levelOneState = {
         currentLevel=currentmap;
         // console.log(currentLevel)
         console.log(currentmap);
-   
+        
+        troll.factor=1;
         // adds each of these sprites below with specific game location
         player = game.add.sprite(xPlayer, yPlayer, 'dude');
       //  dragon = game.add.sprite(300, this.world.height - 490, 'dragon');
@@ -67,7 +69,7 @@ var levelOneState = {
         game.physics.arcade.enable(spikeBall1);
         game.physics.arcade.enable(spikeBall2);
         game.physics.arcade.enable(potion);
-
+        game.physics.arcade.enable(troll);
         //  Physics properties for sprites. Gave each a bounce for fun
         player.body.bounce.y = 0.1;
         player.body.gravity.y = 440;
@@ -93,6 +95,9 @@ var levelOneState = {
         potion.body.gravity.y = 300;
         potion.body.collideWorldBounds = true;
 
+        troll.body.bounce.y = 0.5;
+        troll.body.gravity.y = 300;
+        troll.body.collideWorldBounds = true;
         //  Made Two animations for when the player is walking left and right
         player.animations.add('left', [9, 10, 11], 10, true);
         player.animations.add('right', [28, 29,30], 10, true);
@@ -151,7 +156,7 @@ var levelOneState = {
             console.log(i);   
         }
         }
-        },15000);
+        },18000);
 
         //  Displays the level
         levelText = game.add.text(10, 560, 'Level: '+level, { fontSize: '16px', fill: '#000' });
@@ -171,7 +176,7 @@ var levelOneState = {
    //   game.physics.arcade.collide(door2, platforms);
         game.physics.arcade.collide(creep, platforms);
         game.physics.arcade.collide(potion, platforms);
-     
+        game.physics.arcade.collide(troll, platforms);
         //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
         game.physics.arcade.overlap(player, door1, nextLevelOption1, null, this);
   //    game.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
@@ -179,7 +184,7 @@ var levelOneState = {
         // Player collision with mobs
         game.physics.arcade.overlap(player, dragon, destroymob, null, this);
         game.physics.arcade.overlap(player, creep, destroyCreep, null, this);
-        
+        game.physics.arcade.overlap(player, troll, destroyTroll, null, this);
         // Player collision with hazards
         game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
         game.physics.arcade.overlap(player, spikeBall1, killedByHazard, null, this);
@@ -219,7 +224,7 @@ var levelOneState = {
         if (cursors.up.isDown && player.body.touching.down)
         {
             //sets how high the player can jump
-            player.body.velocity.y = -260;
+            player.body.velocity.y = -263;
         }
         //starts animation for dragon
         if (dragonKilled==false) {
@@ -230,11 +235,30 @@ var levelOneState = {
             }
         //starts animation for creep
         if (creepKilled==false) {
-            // Starts Dragon animation
+            // Starts creep animation
                 creep.animations.play('start');
             }else if (creepKilled==true) {
                 creep.animations.stop();
             }
+
+        //for troll movement
+            troll.body.velocity.x= troll.factor*50;
+        if (trollKilled==false) {
+            // Starts troll animation
+            if (troll.body.x >= 550)
+            {
+                troll.factor = -1;
+                troll.animations.play('left');
+            }
+            if (troll.body.x <= 100)
+            {
+                troll.factor = 1;
+                troll.animations.play('right');
+            }
+            }else if (trollKilled==true) {
+                troll.animations.stop();
+            }
+   
         // Handles collision for mobs
  
         function destroymob(player, dragon) {
@@ -273,6 +297,24 @@ var levelOneState = {
             swordOne.play();
 
         }
+        function destroyTroll(player, troll) {
+            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
+           //Stores player's current X postion so the player will reappear in same spot. 
+           xPlayer=player.world.x;
+           //Stores player's current Y postion so the player will reappear in same spot. 
+           yPlayer=player.world.y;
+           //Stores the currentLevel in the global currentmap var so the level doesn't change
+           currentmap=currentLevel;
+           troll.kill();
+           //Tells us that the dragon has been killed
+           trollKilled = true;
+           //Player gets 300 points for killing the dragon
+           score +=50;
+           scoreText.text = 'Score: ' + score;
+           var swordOne = game.add.audio('swordOne');
+            swordOne.play();
+
+        }
         function nextLevelOption1 (player, door1) {
             // Removes the door from the screen
             //door1.kill();
@@ -293,6 +335,7 @@ var levelOneState = {
             dragonKilled = false;
             openedPotion = false;
             creepKilled = false;
+            trollKilled = false;
         }
  /*       function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
