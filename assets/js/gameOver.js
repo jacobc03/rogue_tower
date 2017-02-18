@@ -15,6 +15,6 @@ var EndState = {
         game.state.start('levelOne');
     },
     MainMenu: function() {
-        game.state.start('MainMenu')
+        game.state.start('MainMenu');
     }
 }
