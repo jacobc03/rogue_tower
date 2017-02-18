@@ -224,7 +224,7 @@ var levelOneState = {
         if (cursors.up.isDown && player.body.touching.down)
         {
             //sets how high the player can jump
-            player.body.velocity.y = -263;
+            player.body.velocity.y = -268;
         }
         //starts animation for dragon
         if (dragonKilled==false) {
@@ -385,11 +385,32 @@ var levelOneState = {
            hpText.text = 'HP: ' + HP;
         }
         function openPotion(player, potion){
+          if (level<=3) {
             potion.kill();
-            HP+=100;
+            HP=100;
             hpText.text = 'HP: ' + HP;
             potion.kill();
             openedPotion=true;
+          }else if (level>3 && level<=5){
+            potion.kill();
+            HP=300;
+            hpText.text = 'HP: ' + HP;
+            potion.kill();
+            openedPotion=true;
+            }else if (level>5 && level<=10){
+            potion.kill();
+            HP=500;
+            hpText.text = 'HP: ' + HP;
+            potion.kill();
+            openedPotion=true;
+            }else{ 
+            potion.kill();
+            HP=1000;
+            hpText.text = 'HP: ' + HP;
+            potion.kill();
+            openedPotion=true;
+
+            }
         }
     },
     //Brings player to game over screen.
