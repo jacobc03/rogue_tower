@@ -18,7 +18,7 @@ var ledgebuilderx = [	[350, 200, 500, 50, 650, 200, 500, 350, 350, 50, 650],
 	spikebuilder1 = [[300,125],[300,125],[420,320],[280,380],[90,400]],
 	spikebuilder2 = [[525,400],[525,400],[525,320],[480,400],[180,20]],
 	dragonbuilder = [[525,100],[455,100],[300,100],[370,110],[360,150]];
-
+	creepbuilder = [[100,100],[100,100],[100,100],[100,110],[100,150]];
 // current map will randomize which map to pick. ledgebuilderx&y is an array of the coordinates for each ledge
 	var currentmap = Math.floor(Math.random() * ledgebuilderx.length);
 // map 1: +- 150 to x; +70 to y;
@@ -33,6 +33,7 @@ var Spawn = {
         Spawn.door();
         Spawn.spike();
         Spawn.dragon();
+        Spawn.creep();
 	},
 	ledge: function() {
 		// map 1: 11 ledges, map 2: 12 ledges
@@ -69,8 +70,16 @@ var Spawn = {
 			var dragonmap = dragonbuilder[currentmap];
 		dragon  = game.add.sprite(dragonmap[0], dragonmap[1], 'dragon');
 		 // Made animation for dragon
-        dragon.animations.add('start', [3,4, 5,12,6,7,8,8,14,17,18,19,,19,1914], 3, true);
-		}
-		
+        dragon.animations.add('start', [3,4, 5,12,6,7,8,8,14,17,18,19,,19,19,14], 3, true);
+		}	
+	},
+	creep: function() {
+		//checks to see if the dragon has been killed or not
+		if (creepKilled==false) {
+			var creepmap = creepbuilder[currentmap];
+		creep  = game.add.sprite(creepmap[0], creepmap[1], 'creep');
+		 // Made animation for creep
+        creep.animations.add('start', [0,1,2,3,4,5,6,7,8,9,10], 3, true);
+		}	
 	}
 }

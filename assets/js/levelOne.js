@@ -1,7 +1,7 @@
-var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,openedPotion=false;
+var player, platforms, cursors, HP, hpText, level=1, levelText, ledge, score, scoreText, newspawn, torch,xPlayer=32,yPlayer=450,dragonKilled=false,creepKilled=false,openedPotion=false;
 
 var reset = function() {
-      HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
+      HP=500, score=0, level=1,xPlayer=32,yPlayer=450, dragonKilled=false,creepKilled=false,openedPotion=false,currentmap=Math.floor(Math.random() * ledgebuilderx.length);
 }
 reset() // will set intial numbers
 newspawn = true; // will be used to respawn map
@@ -17,8 +17,8 @@ var levelOneState = {
         game.load.image('hud', './Graphics/snow.png');
         game.load.image('door', './Graphics/door.png');
         game.load.spritesheet('dragon', './Graphics/dragonsprite.png',126.4,102.4,21);
+        game.load.spritesheet('creep', './Graphics/reptile.png',86.8,53,11);
         game.load.spritesheet('dude', './Graphics/dude.png', 41, 45,35);
-        game.load.spritesheet('creep', './Graphics/Grue.png', 56, 70,1);
         game.load.image('spike', './Graphics/spike.png');
         game.load.image('spikeball', './Graphics/spikeball.png');
         game.load.image('fireball', './Graphics/fireball.png');
@@ -60,6 +60,7 @@ var levelOneState = {
         //  adds physics to the each of the sprites below
         game.physics.arcade.enable(player);
         game.physics.arcade.enable(dragon);
+        game.physics.arcade.enable(creep);
         game.physics.arcade.enable(door1);
       //  game.physics.arcade.enable(door2);
         game.physics.arcade.enable(spikeBall1);
@@ -74,6 +75,10 @@ var levelOneState = {
         dragon.body.bounce.y = 0.5;
         dragon.body.gravity.y = 300;
         dragon.body.collideWorldBounds = true;
+
+        creep.body.bounce.y = 0.5;
+        creep.body.gravity.y = 300;
+        creep.body.collideWorldBounds = true;
 
         door1.body.bounce.y = 0.5;
         door1.body.gravity.y = 300;
@@ -92,24 +97,6 @@ var levelOneState = {
         player.animations.add('right', [28, 29,30], 10, true);
         // Made animation for dragon
  
-        
-        creeps = this.add.group();
-
-        //  Enables physics for any object that is the creeps group
-        creeps.enableBody = true;
-        //
-        randomCreepNum=Math.floor((Math.random() * 10) + 1);
-                //  Creates a random number of Creeps
-        for (var i = 0; i < 0; i++)
-        {
-            //  Create a creep inside of the 'creeps' group
-            var creep = creeps.create(i * 100, 180, 'creep');
-
-            //  Freefall speed
-            creep.body.gravity.y = 300;
-
-            
-        }
 
         //  Created the torches group
         torches = game.add.group();
@@ -185,7 +172,7 @@ var levelOneState = {
         game.physics.arcade.collide(dragon, platforms);
         game.physics.arcade.collide(door1, platforms);
    //     game.physics.arcade.collide(door2, platforms);
-        game.physics.arcade.collide(creeps, platforms);
+        game.physics.arcade.collide(creep, platforms);
         game.physics.arcade.collide(potion, platforms);
      
         //  If the player overlaps with door1 or door 2, Call nextLevelOption1 or nextLevelOption2
@@ -193,7 +180,7 @@ var levelOneState = {
   //      game.physics.arcade.overlap(player, door2, nextLevelOption2, null, this);
         // Player collision with mobs
         game.physics.arcade.overlap(player, dragon, destroymob, null, this);
-        game.physics.arcade.overlap(player, creeps, destroyCreeps, null, this);
+        game.physics.arcade.overlap(player, creep, destroyCreep, null, this);
         // Player collision with hazards
         game.physics.arcade.overlap(player, fireBalls, killedByHazard, null, this);
         game.physics.arcade.overlap(player, spikeBall1, killedByHazard, null, this);
@@ -201,9 +188,9 @@ var levelOneState = {
         // Player collision with potions
         game.physics.arcade.overlap(player, potion, openPotion, null, this);
         // Mob collision with other mobs
-        game.physics.arcade.overlap(dragon, creeps, destroyCreep, null, this);
-        game.physics.arcade.overlap(door1, creeps, destroyCreep2, null, this);
-   //     game.physics.arcade.overlap(door2, creeps, destroyCreep3, null, this);     
+     //   game.physics.arcade.overlap(dragon, creep, destroyCreep, null, this);
+    //    game.physics.arcade.overlap(door1, creep, destroyCreep2, null, this);
+   //     game.physics.arcade.overlap(door2, creep, destroyCreep3, null, this);     
         //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
         if (cursors.left.isDown)
@@ -233,13 +220,20 @@ var levelOneState = {
             //sets how high the player can jump
             player.body.velocity.y = -260;
         }
-
-if (dragonKilled==false) {
-    // Starts Dragon animation
-        dragon.animations.play('start');
-    }else if (dragonKilled==true) {
-        dragon.animations.stop();
-    }
+        //starts animation for dragon
+        if (dragonKilled==false) {
+            // Starts Dragon animation
+                dragon.animations.play('start');
+            }else if (dragonKilled==true) {
+                dragon.animations.stop();
+            }
+        //starts animation for creep
+        if (creepKilled==false) {
+            // Starts Dragon animation
+                creep.animations.play('start');
+            }else if (creepKilled==true) {
+                creep.animations.stop();
+            }
         // Handles collision for mobs
  
         function destroymob(player, dragon) {
@@ -260,11 +254,22 @@ if (dragonKilled==false) {
            var swordOne = game.add.audio('swordOne');
             swordOne.play();
         }
-        function destroyCreeps(player, creeps) {
-            creeps.kill();
-            console.log("test");
-            var random = Math.floor((Math.random() * 4) + 1);
-            game.state.start("BattleState", true, false);
+        function destroyCreep(player, creep) {
+            game.state.start("BootState", true, false, "../levels/boss.json", "BattleState");
+           //Stores player's current X postion so the player will reappear in same spot. 
+           xPlayer=player.world.x;
+           //Stores player's current Y postion so the player will reappear in same spot. 
+           yPlayer=player.world.y;
+           //Stores the currentLevel in the global currentmap var so the level doesn't change
+           currentmap=currentLevel;
+           creep.kill();
+           //Tells us that the dragon has been killed
+           creepKilled = true;
+           //Player gets 300 points for killing the dragon
+           score +=300;
+           scoreText.text = 'Score: ' + score;
+           var swordOne = game.add.audio('swordOne');
+            swordOne.play();
 
         }
         function nextLevelOption1 (player, door1) {
@@ -286,6 +291,7 @@ if (dragonKilled==false) {
             //Makes sure the dragon comes back for the next map
             dragonKilled = false;
             openedPotion = false;
+            creepKilled = false;
         }
  /*       function nextLevelOption2 (player, door2) {
             // Removes the door from the screen
@@ -309,17 +315,17 @@ if (dragonKilled==false) {
              
         }
    */     
-        function destroyCreep (dragon, creeps) {
+ /*       function destroyCreep (dragon, creep) {
             // Removes the creep from the screen
-            creeps.kill();
+            creep.kill();
         }
-        function destroyCreep2 (door1, creeps) {   
+        function destroyCreep2 (door1, creep) {   
             // Removes the creep from the screen
-            creeps.kill();
+            creep.kill();
         }
- /*       function destroyCreep3 (door2, creeps) {
+        function destroyCreep3 (door2, creep) {
             // Removes the creep from the screen
-            creeps.kill();
+            creep.kill();
             }
 */
         function killedByHazard (player, fireBalls,spikeBall1,spikeBall2) {
